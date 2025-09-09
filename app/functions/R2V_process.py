@@ -72,7 +72,7 @@ class ReSizeManager:
 
 class RenderManager:
     @staticmethod
-    def render_from_folder(image_folder, audio_folder, id: int):
+    def render_from_folder(image_folder, audio_folder, id: int, uuid: str = None):
         logging.info("[RENDER] Start rendering process...")
 
         # audio_folder = Path(r"D:\Tan.n-AIEngineer\Program\Video-render-order-theta\app\database\Audio") / f"{id}"
@@ -84,7 +84,7 @@ class RenderManager:
             audio_folder = Path(DATA_AUDIO_PATH) / f"{id}"
             image_folder = Path(DATA_IMAGEN_PATH) / f"{id}"
         video_folder = Path(DATA_VIDEO_PATH) / f"{id}"
-        ffmpeg_file = r"D:\Tan.n-AIEngineer\Program\Video-render-order-theta\app\bin\ffmpeg.exe"
+        ffmpeg_file = r"E:\python\Video-render-order-theta\app\bin\ffmpeg.exe"
         video_folder.mkdir(parents=True, exist_ok=True)
 
         # === Step 1: Load audio ===
@@ -142,7 +142,11 @@ class RenderManager:
         ], check=True)
 
         # === Step 5: Merge audio ===
-        output_file = video_folder / f"{id}.mp4"
+        # Use UUID in filename to make each video unique
+        if uuid:
+            output_file = video_folder / f"{uuid}.mp4"
+        else:
+            output_file = video_folder / f"{id}.mp4"
         logging.info("[RENDER] Merging video with audio...")
         subprocess.run([
             ffmpeg_file, "-y",
@@ -165,8 +169,8 @@ class RenderManager:
 
 class VideoManager:
     @staticmethod
-    def process_video(image_folder, audio_folder, id: str ):
-        video_path = RenderManager.render_from_folder(image_folder, audio_folder, id)
+    def process_video(image_folder, audio_folder, id: str, uuid: str = None):
+        video_path = RenderManager.render_from_folder(image_folder, audio_folder, id, uuid)
         if video_path.exists():
             logging.info("[RENDER] Final Video Generate sucessfully!")
             return video_path
@@ -175,5 +179,4 @@ class VideoManager:
         
         
 if __name__ == "__main__":
-
     VideoManager.process_video(10014)

@@ -27,7 +27,8 @@ timeout /t 2 >nul
 REM 4. Chạy ngrok từ thư mục D:\SETUP PM\PROGRAM\ngrok
 echo 🌐 Đang mở ngrok tunnel...
 pushd D:\ngrok
-start cmd /k "ngrok http  %PORT%"
+start cmd /k "ngrok http --url=https://drew-weest-trish.ngrok-free.app %PORT%"
 popd
 
 REM uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+REM ngrok http --url=https://drew-weest-trish.ngrok-free.app 8000

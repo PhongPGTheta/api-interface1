@@ -260,6 +260,8 @@
                 <div class="step-dot" id="step4-dot">4</div>
                 <div class="step-dot" id="step5-dot">5</div>
                 <div class="step-dot" id="step6-dot">6</div>
+                <div class="step-dot" id="step7-dot">7</div>
+                <div class="step-dot" id="step8-dot">8</div>
             </div>
 
             <!-- Step 1: Create Order -->
@@ -335,37 +337,48 @@
                 <div id="image-result" class="hidden"></div>
             </div>
 
-            <!-- Quick Image Generation -->
-            <div class="step" id="quick-image-step">
-                <h3>⚡ Tạo Hình Ảnh Nhanh (Sử dụng UUID có sẵn)</h3>
-                <div class="form-group">
-                    <label for="quick-uuid">Nhập UUID có sẵn:</label>
-                    <input type="text" id="quick-uuid" placeholder="Nhập UUID đã có để tạo hình ảnh">
-                </div>
-                <div class="form-group">
-                    <label for="quick-image-count">Số lượng hình ảnh:</label>
-                    <select id="quick-image-count">
-                        <option value="5">5 hình</option>
-                        <option value="10" selected>10 hình</option>
-                        <option value="15">15 hình</option>
-                        <option value="20">20 hình</option>
-                    </select>
-                </div>
-                <button class="btn" onclick="quickGenerateImages()">Tạo Hình Ảnh Nhanh</button>
-                <div id="quick-image-status" class="hidden"></div>
-                <div id="quick-image-result" class="hidden"></div>
-            </div>
 
             <!-- Step 6: Check Image Status -->
             <div class="step" id="step6">
                 <h3>🔍 Bước 6: Kiểm tra Hình Ảnh Status</h3>
                 <div class="form-group">
                     <label for="image-check-uuid">UUID để kiểm tra hình ảnh:</label>
-                    <input type="text" id="image-check-uuid" placeholder="UUID sẽ được điền tự động" readonly>
+                    <input type="text" id="image-check-uuid" placeholder="Nhập UUID để kiểm tra hình ảnh">
                 </div>
-                <button class="btn" onclick="checkImageStatus()" id="image-check-btn" disabled>Kiểm tra Hình Ảnh</button>
+                <button class="btn" onclick="useCurrentUUIDForImageCheck()" id="use-current-for-check-btn" disabled>Dùng UUID hiện tại</button>
+                <button class="btn" onclick="checkImageStatus()" id="image-check-btn">Kiểm tra Hình Ảnh</button>
                 <div id="image-check-status" class="hidden"></div>
                 <div id="image-check-result" class="hidden"></div>
+            </div>
+
+            <!-- Step 7: Render Video -->
+            <div class="step" id="step7">
+                <h3>🎬 Bước 7: Render Video</h3>
+                <div class="form-group">
+                    <label for="video-uuid">UUID từ bước 1:</label>
+                    <input type="text" id="video-uuid" placeholder="UUID sẽ được điền tự động">
+                </div>
+                <div class="form-group">
+                    <label for="video-id">ID (tùy chọn):</label>
+                    <input type="number" id="video-id" placeholder="Nhập ID nếu có">
+                </div>
+                <button class="btn" onclick="enableVideoRender()" id="enable-video-btn">Enable Render Video</button>
+                <button class="btn" onclick="renderVideo()" id="video-btn" disabled>Render Video</button>
+                <div id="video-status" class="hidden"></div>
+                <div id="video-result" class="hidden"></div>
+            </div>
+
+            <!-- Step 8: Check Video Status -->
+            <div class="step" id="step8">
+                <h3>🔍 Bước 8: Kiểm tra Video Status</h3>
+                <div class="form-group">
+                    <label for="video-check-uuid">UUID để kiểm tra video:</label>
+                    <input type="text" id="video-check-uuid" placeholder="UUID sẽ được điền tự động">
+                </div>
+                <button class="btn" onclick="enableVideoCheck()" id="enable-video-check-btn">Enable Check Video</button>
+                <button class="btn" onclick="checkVideoStatus()" id="video-check-btn" disabled>Kiểm tra Video</button>
+                <div id="video-check-status" class="hidden"></div>
+                <div id="video-check-result" class="hidden"></div>
             </div>
 
             <!-- Current UUID Display -->
@@ -396,6 +409,8 @@
         let orderData = null;
         let orderCompleted = false;
         let audioCompleted = false;
+        let imagesCompleted = false;
+        let videoCompleted = false;
 
         // API Base URL
         const API_BASE = window.location.origin + '/api/v1/tasks';
@@ -423,6 +438,7 @@
             const hasUUID = currentUUID && currentUUID !== 'Chưa có';
             document.getElementById('copy-uuid-btn').disabled = !hasUUID;
             document.getElementById('use-current-uuid-btn').disabled = !hasUUID;
+            document.getElementById('use-current-for-check-btn').disabled = !hasUUID;
         }
 
         // Copy current UUID to clipboard
@@ -452,6 +468,15 @@
             }
         }
 
+        // Use current UUID for image check
+        function useCurrentUUIDForImageCheck() {
+            if (currentUUID) {
+                document.getElementById('image-check-uuid').value = currentUUID;
+                // Scroll to image check section
+                document.getElementById('step6').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
         // Utility functions
         function showStatus(elementId, message, type = 'processing') {
             const element = document.getElementById(elementId);
@@ -467,7 +492,7 @@
         }
 
         function updateStepIndicator(activeStep, errorStep = null) {
-            for (let i = 1; i <= 6; i++) {
+            for (let i = 1; i <= 8; i++) {
                 const dot = document.getElementById(`step${i}-dot`);
                 const step = document.getElementById(`step${i}`);
                 
@@ -538,6 +563,8 @@
                     document.getElementById('audio-check-uuid').value = currentUUID;
                     document.getElementById('image-uuid').value = currentUUID;
                     document.getElementById('image-check-uuid').value = currentUUID;
+                    document.getElementById('video-uuid').value = currentUUID;
+                    document.getElementById('video-check-uuid').value = currentUUID;
                     updateCurrentUUIDInfo();
 
                     showStatus('order-status', 'Order đã được tạo thành công!', 'completed');
@@ -729,13 +756,12 @@
             try {
                 const requestBody = {
                     uuid: currentUUID,
-                    use_script: false,
-                    count: parseInt(imageCount)
+                    use_script: false
                 };
 
                 debugLog('Sending image request', requestBody);
 
-                const response = await fetch(`${API_BASE}/picture`, {
+                const response = await fetch(`${API_BASE}/imagen`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -756,11 +782,10 @@
                             <pre>${JSON.stringify(data, null, 2)}</pre>
                         </div>
                         <p>Hình ảnh đang được xử lý trong background.</p>
-                        <p><strong>Số lượng yêu cầu:</strong> ${imageCount} hình</p>
+                        <p><strong>Lưu ý:</strong> Số lượng hình ảnh sẽ được tự động tạo dựa trên nội dung script.</p>
                     `);
 
                     // Enable next step
-                    document.getElementById('image-check-btn').disabled = false;
                     updateStepIndicator(6);
                 } else {
                     throw new Error(data.error || 'Có lỗi xảy ra khi tạo hình ảnh');
@@ -774,34 +799,40 @@
 
         // Step 6: Check Image Status
         async function checkImageStatus() {
-            if (!currentUUID) {
-                alert('Vui lòng tạo order trước');
+            const uuid = document.getElementById('image-check-uuid').value.trim();
+            
+            if (!uuid) {
+                alert('Vui lòng nhập UUID để kiểm tra hình ảnh');
                 return;
             }
 
             showStatus('image-check-status', 'Đang kiểm tra hình ảnh...', 'processing');
-            debugLog('Checking image status...', { uuid: currentUUID });
+            debugLog('Checking image status...', { uuid: uuid });
 
             try {
-                const response = await fetch(`${API_BASE}/picture/get?uuid=${currentUUID}`);
+                const response = await fetch(`${API_BASE}/imagen/get?uuid=${uuid}`);
                 const data = await response.json();
                 debugLog('Received image status', { status: response.status, data });
 
                 if (response.ok) {
+                    imagesCompleted = data.status === 'done';
                     showStatus('image-check-status', 'Image status retrieved!', 'completed');
                     
                     let imageGallery = '';
-                    if (data.image_paths && data.image_paths.length > 0) {
+                    if (data.images_path && data.images_path.length > 0) {
                         imageGallery = `
                             <h5>🖼️ Generated Images:</h5>
                             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin: 10px 0;">
-                                ${data.image_paths.map((path, index) => `
-                                    <div style="text-align: center;">
-                                        <img src="${path}" alt="Generated Image ${index + 1}" 
-                                             style="width: 100%; height: 150px; object-fit: cover; border-radius: 5px; border: 1px solid #ddd;">
-                                        <p style="font-size: 12px; margin: 5px 0;">Image ${index + 1}</p>
-                                    </div>
-                                `).join('')}
+                                ${data.images_path.map((imageData, index) => {
+                                    const path = typeof imageData === 'string' ? imageData : (imageData.path || imageData.url || imageData[Object.keys(imageData)[0]]);
+                                    return `
+                                        <div style="text-align: center;">
+                                            <img src="${path}" alt="Generated Image ${index + 1}" 
+                                                 style="width: 100%; height: 150px; object-fit: cover; border-radius: 5px; border: 1px solid #ddd;">
+                                            <p style="font-size: 12px; margin: 5px 0;">Scene ${imageData.scene_number || index + 1}</p>
+                                        </div>
+                                    `;
+                                }).join('')}
                             </div>
                         `;
                     }
@@ -813,9 +844,15 @@
                             <pre>${JSON.stringify(data, null, 2)}</pre>
                         </div>
                         <p><strong>Status:</strong> ${data.status}</p>
-                        <p><strong>Total Images:</strong> ${data.image_paths ? data.image_paths.length : 0}</p>
+                        <p><strong>Total Images:</strong> ${data.images_path ? data.images_path.length : 0}</p>
                         ${imageGallery}
                     `);
+
+                    // Enable video render if images are completed
+                    if (imagesCompleted && audioCompleted) {
+                        document.getElementById('video-btn').disabled = false;
+                        updateStepIndicator(7);
+                    }
                 } else {
                     throw new Error(data.error || 'Không thể lấy thông tin hình ảnh');
                 }
@@ -826,29 +863,46 @@
             }
         }
 
-        // Quick Image Generation (using existing UUID)
-        async function quickGenerateImages() {
-            const uuid = document.getElementById('quick-uuid').value.trim();
-            const imageCount = document.getElementById('quick-image-count').value;
 
-            if (!uuid) {
+        // Enable Video Render
+        function enableVideoRender() {
+            const videoUuid = document.getElementById('video-uuid').value.trim();
+            if (!videoUuid) {
+                alert('Vui lòng nhập UUID trước');
+                return;
+            }
+            
+            document.getElementById('video-btn').disabled = false;
+            document.getElementById('enable-video-btn').style.display = 'none';
+            showStatus('video-status', 'Ready to render video with UUID: ' + videoUuid, 'completed');
+            updateStepIndicator(7);
+        }
+
+        // Step 7: Render Video
+        async function renderVideo() {
+            const videoUuid = document.getElementById('video-uuid').value.trim();
+            if (!videoUuid) {
                 alert('Vui lòng nhập UUID');
                 return;
             }
 
-            showStatus('quick-image-status', 'Đang tạo hình ảnh...', 'processing');
-            debugLog('Quick generating images...', { uuid, count: imageCount });
+            const videoId = document.getElementById('video-id').value;
+            showStatus('video-status', 'Đang render video...', 'processing');
+            updateStepIndicator(7);
+            debugLog('Rendering video...', { uuid: videoUuid, id: videoId });
 
             try {
                 const requestBody = {
-                    uuid: uuid,
-                    use_script: false,
-                    count: parseInt(imageCount)
+                    uuid: videoUuid
                 };
+                
+                if (videoId) {
+                    requestBody.id = parseInt(videoId);
+                }
 
-                debugLog('Sending quick image request', requestBody);
+                debugLog('Sending video render request', requestBody);
 
-                const response = await fetch(`${API_BASE}/picture`, {
+                const response = await fetch(`${API_BASE}/video`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -858,30 +912,99 @@
                 });
 
                 const data = await response.json();
-                debugLog('Received quick image response', { status: response.status, data });
+                debugLog('Received video render response', { status: response.status, data });
 
                 if (response.ok) {
-                    showStatus('quick-image-status', 'Image request sent!', 'completed');
-                    showResult('quick-image-result', `
-                        <h4>⚡ Quick Image Request Sent</h4>
+                    showStatus('video-status', 'Video render request sent!', 'completed');
+                    showResult('video-result', `
+                        <h4>🎬 Video Render Started</h4>
                         <div class="debug-info">
                             <h5>Response Data:</h5>
                             <pre>${JSON.stringify(data, null, 2)}</pre>
                         </div>
-                        <p>Hình ảnh đang được xử lý trong background.</p>
-                        <p><strong>UUID:</strong> ${uuid}</p>
-                        <p><strong>Số lượng yêu cầu:</strong> ${imageCount} hình</p>
-                        <p><strong>Lưu ý:</strong> Sử dụng UUID này để kiểm tra status sau: ${uuid}</p>
+                        <p>Video đang được render trong background.</p>
+                        <p><strong>Lưu ý:</strong> Quá trình render có thể mất vài phút.</p>
                     `);
 
-                    // Auto-fill the check UUID field
-                    document.getElementById('image-check-uuid').value = uuid;
+                    // Enable next step
+                    document.getElementById('video-check-btn').disabled = false;
+                    updateStepIndicator(8);
                 } else {
-                    throw new Error(data.error || 'Có lỗi xảy ra khi tạo hình ảnh');
+                    throw new Error(data.error || 'Có lỗi xảy ra khi render video');
                 }
             } catch (error) {
-                debugLog('Error quick generating images', error.message);
-                showStatus('quick-image-status', `Lỗi: ${error.message}`, 'error');
+                debugLog('Error rendering video', error.message);
+                showStatus('video-status', `Lỗi: ${error.message}`, 'error');
+                updateStepIndicator(7, 7);
+            }
+        }
+
+        // Enable Video Check
+        function enableVideoCheck() {
+            const videoCheckUuid = document.getElementById('video-check-uuid').value.trim();
+            if (!videoCheckUuid) {
+                alert('Vui lòng nhập UUID trước');
+                return;
+            }
+            
+            document.getElementById('video-check-btn').disabled = false;
+            document.getElementById('enable-video-check-btn').style.display = 'none';
+            showStatus('video-check-status', 'Ready to check video with UUID: ' + videoCheckUuid, 'completed');
+            updateStepIndicator(8);
+        }
+
+        // Step 8: Check Video Status
+        async function checkVideoStatus() {
+            const videoCheckUuid = document.getElementById('video-check-uuid').value.trim();
+            if (!videoCheckUuid) {
+                alert('Vui lòng nhập UUID');
+                return;
+            }
+
+            showStatus('video-check-status', 'Đang kiểm tra video...', 'processing');
+            debugLog('Checking video status...', { uuid: videoCheckUuid });
+
+            try {
+                const response = await fetch(`${API_BASE}/video/get?uuid=${videoCheckUuid}`);
+                const data = await response.json();
+                debugLog('Received video status', { status: response.status, data });
+
+                if (response.ok) {
+                    videoCompleted = data.status === 'done';
+                    showStatus('video-check-status', 'Video status retrieved!', 'completed');
+                    
+                    let videoPlayer = '';
+                    if (data.video_path && data.status === 'done') {
+                        videoPlayer = `
+                            <h5>🎬 Generated Video:</h5>
+                            <div style="margin: 10px 0;">
+                                <video controls style="width: 100%; max-width: 600px; border-radius: 5px; border: 1px solid #ddd;">
+                                    <source src="${data.video_path}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <p style="margin: 10px 0;"><a href="${data.video_path}" target="_blank" download>Tải xuống video</a></p>
+                            </div>
+                        `;
+                    }
+
+                    showResult('video-check-result', `
+                        <h4>🎬 Video Status</h4>
+                        <div class="debug-info">
+                            <h5>Video Data:</h5>
+                            <pre>${JSON.stringify(data, null, 2)}</pre>
+                        </div>
+                        <p><strong>Status:</strong> ${data.status}</p>
+                        <p><strong>Video Path:</strong> ${data.video_path || 'Not available'}</p>
+                        ${videoPlayer}
+                        ${data.status === 'done' ? '<p><strong>✅ Pipeline hoàn thành!</strong></p>' : '<p><strong>⏳ Video đang được xử lý...</strong></p>'}
+                    `);
+                } else {
+                    throw new Error(data.error || 'Không thể lấy thông tin video');
+                }
+            } catch (error) {
+                debugLog('Error checking video status', error.message);
+                showStatus('video-check-status', `Lỗi: ${error.message}`, 'error');
+                updateStepIndicator(8, 8);
             }
         }
 

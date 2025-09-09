@@ -262,29 +262,62 @@ class ImagenManager:
             "accept": "application/json",
             "authorization": f"Bearer {LEONARDO_API_KEY}"
         }
-        response = requests.get(url, headers=headers)
-        with open (f"{IMAGENTEMP_PATH}/leonardo_models.json", "w", encoding="utf-8") as d:
-            json.dump(response.json(), d, indent=2, ensure_ascii=False)
+        
+        try:
+            response = requests.get(url, headers=headers)
+            response.raise_for_status()
+            models_data = response.json()
+            
+            with open(f"{IMAGENTEMP_PATH}/leonardo_models.json", "w", encoding="utf-8") as d:
+                json.dump(models_data, d, indent=2, ensure_ascii=False)
 
-        found = False  # cờ đánh dấu nếu tìm được
+            found = False  # cờ đánh dấu nếu tìm được
 
-        for ctmodels in response.json():
-            logging.info(f"[LEONARDO] Checklist Models: {ctmodels}")
-            for model in response.json()[f"{ctmodels}"]:
-                model_id = model.get("id", "")
-                model_name = model.get("name", "")
+            # Kiểm tra cấu trúc response
+            if isinstance(models_data, dict):
+                # Nếu response là dict, tìm key chứa danh sách models
+                for key, value in models_data.items():
+                    if isinstance(value, list):
+                        logging.info(f"[LEONARDO] Processing models from key: {key}")
+                        for model in value:
+                            if isinstance(model, dict):
+                                model_id = model.get("id", "")
+                                model_name = model.get("name", "")
 
-                if not name_model.strip():
-                    # Không nhập model → in danh sách ra thôi
-                    logging.info(f"[LEONARDO] Model: {model_id} - {model_name}")
-                elif model_name.strip().lower() == name_model.strip().lower():
-                    logging.info(f"[LEONARDO] Found model: {model_name} → ID: {model_id}")
-                    found = True
-                    return model_id
+                                if not name_model.strip():
+                                    # Không nhập model → in danh sách ra thôi
+                                    logging.info(f"[LEONARDO] Model: {model_id} - {model_name}")
+                                elif model_name.strip().lower() == name_model.strip().lower():
+                                    logging.info(f"[LEONARDO] Found model: {model_name} → ID: {model_id}")
+                                    found = True
+                                    return model_id
+            elif isinstance(models_data, list):
+                # Nếu response là list trực tiếp
+                logging.info(f"[LEONARDO] Processing models from list")
+                for model in models_data:
+                    if isinstance(model, dict):
+                        model_id = model.get("id", "")
+                        model_name = model.get("name", "")
 
-        # Sau vòng lặp:
-        if name_model.strip() and not found:
-            logging.warning(f"[LEONARDO] Model '{name_model}' not found. Using default.")
+                        if not name_model.strip():
+                            # Không nhập model → in danh sách ra thôi
+                            logging.info(f"[LEONARDO] Model: {model_id} - {model_name}")
+                        elif model_name.strip().lower() == name_model.strip().lower():
+                            logging.info(f"[LEONARDO] Found model: {model_name} → ID: {model_id}")
+                            found = True
+                            return model_id
+
+            # Sau vòng lặp:
+            if name_model.strip() and not found:
+                logging.warning(f"[LEONARDO] Model '{name_model}' not found. Using default.")
+                return "b24e16ff-06e3-43eb-8d33-4416c2d75876"
+            elif not name_model.strip():
+                logging.info(f"[LEONARDO] No specific model requested, using default.")
+                return "b24e16ff-06e3-43eb-8d33-4416c2d75876"
+                
+        except Exception as e:
+            logging.error(f"[LEONARDO] Error fetching models: {e}")
+            logging.warning(f"[LEONARDO] Using default model due to error.")
             return "b24e16ff-06e3-43eb-8d33-4416c2d75876"
                 
     @staticmethod
@@ -327,11 +360,12 @@ class ImagenManager:
 
     @staticmethod
     def process_imagen(transcript: str, id: int):
-        is_leonardo = True
+        is_leonardo = False  # Tạm thời tắt Leonardo do API key lỗi
         is_gpt = False
-        is_gemini = False
+        is_gemini = True  # Sử dụng Gemini thay thế
         prompt_list = PromptManager.transcript_analysis(transcript, id)
         out_list = []
+        
         if is_leonardo:
             model_id = ImagenManager.get_models_info('Flux Dev')
             for prompt in prompt_list:
