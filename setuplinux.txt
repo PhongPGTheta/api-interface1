@@ -1,0 +1,951 @@
+Welcome to Ubuntu 24.04.3 LTS (GNU/Linux 6.8.0-79-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Tue Sep  9 09:54:13 AM UTC 2025
+
+  System load:  0.01               Processes:              244
+  Usage of /:   11.3% of 56.78GB   Users logged in:        1
+  Memory usage: 8%                 IPv4 address for ens33: 192.168.170.129
+  Swap usage:   0%
+
+
+Expanded Security Maintenance for Applications is not enabled.
+
+0 updates can be applied immediately.
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+Last login: Mon Sep  8 10:09:53 2025 from 192.168.170.1
+phong@phong:~$ sudo apt update
+[sudo] password for phong: 
+Hit:1 http://vn.archive.ubuntu.com/ubuntu noble InRelease
+Get:2 http://vn.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]   
+Get:3 http://vn.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]            
+Get:4 http://vn.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1,390 kB]
+Get:5 http://security.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+Get:6 http://security.ubuntu.com/ubuntu noble-security/main amd64 Packages [1,118 kB]
+Get:7 http://vn.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [274 kB]
+Get:8 http://vn.archive.ubuntu.com/ubuntu noble-updates/main amd64 Components [175 kB]         
+Get:9 http://vn.archive.ubuntu.com/ubuntu noble-updates/main amd64 c-n-f Metadata [14.9 kB]    
+Get:10 http://vn.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Components [212 B]   
+Get:11 http://vn.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1,481 kB]
+Get:12 http://vn.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Components [377 kB]    
+Get:13 http://vn.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Components [940 B]   
+Get:14 http://vn.archive.ubuntu.com/ubuntu noble-backports/main amd64 Components [7,056 B]     
+Get:15 http://vn.archive.ubuntu.com/ubuntu noble-backports/restricted amd64 Components [216 B]
+Get:16 http://vn.archive.ubuntu.com/ubuntu noble-backports/universe amd64 Components [19.2 kB] 
+Get:17 http://vn.archive.ubuntu.com/ubuntu noble-backports/multiverse amd64 Components [212 B] 
+Get:18 http://security.ubuntu.com/ubuntu noble-security/main amd64 Components [21.5 kB]        
+Get:19 http://security.ubuntu.com/ubuntu noble-security/main amd64 c-n-f Metadata [8,708 B]    
+Get:20 http://security.ubuntu.com/ubuntu noble-security/restricted amd64 Components [212 B]    
+Get:21 http://security.ubuntu.com/ubuntu noble-security/universe amd64 Packages [879 kB]       
+Get:22 http://security.ubuntu.com/ubuntu noble-security/universe amd64 Components [52.3 kB]    
+Get:23 http://security.ubuntu.com/ubuntu noble-security/multiverse amd64 Components [212 B]    
+Fetched 6,198 kB in 38s (165 kB/s)                                                             
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+1 package can be upgraded. Run 'apt list --upgradable' to see it.
+phong@phong:~$ sudo apt install git -y
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+git is already the newest version (1:2.43.0-1ubuntu7.3).
+0 upgraded, 0 newly installed, 0 to remove and 1 not upgraded.
+phong@phong:~$ git config --global user.name 'phong'
+phong@phong:~$ git config --global user.email 'phamgiaphong@theta.media'
+phong@phong:~$ git@github.com:<PhongPGTheta>
+-bash: syntax error near unexpected token `newline'
+phong@phong:~$ git@github.com:<PhongPGTheta>/<api-interface1>.git
+-bash: PhongPGTheta: No such file or directory
+phong@phong:~$ git clone git@github.com:<PhongPGTheta>/<api-interface1>.git
+-bash: PhongPGTheta: No such file or directory
+phong@phong:~$ git clone git@github.com:PhongPGTheta/api-interface1.git
+Cloning into 'api-interface1'...
+The authenticity of host 'github.com (20.205.243.166)' can't be established.
+ED25519 key fingerprint is SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Please type 'yes', 'no' or the fingerprint: yes
+Please type 'yes', 'no' or the fingerprint: yes
+Please type 'yes', 'no' or the fingerprint: 'yes'
+Please type 'yes', 'no' or the fingerprint: ^C
+phong@phong:~$ ls
+Video-render-order-theta
+phong@phong:~$ git clone git@github.com:PhongPGTheta/api-interface1.git
+Cloning into 'api-interface1'...
+The authenticity of host 'github.com (20.205.243.166)' can't be established.
+ED25519 key fingerprint is SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Please type 'yes', 'no' or the fingerprint: y
+Please type 'yes', 'no' or the fingerprint: ^C
+phong@phong:~$ git clone https://github.com/PhongPGTheta/api-interface1.git
+Cloning into 'api-interface1'...
+remote: Enumerating objects: 64, done.
+remote: Counting objects: 100% (64/64), done.
+remote: Compressing objects: 100% (44/44), done.
+remote: Total 64 (delta 15), reused 61 (delta 15), pack-reused 0 (from 0)
+Receiving objects: 100% (64/64), 67.72 KiB | 89.00 KiB/s, done.
+Resolving deltas: 100% (15/15), done.
+phong@phong:~$ ls
+api-interface1  Video-render-order-theta
+phong@phong:~$ cd api-interface1/
+phong@phong:~/api-interface1$ ls
+app                    README.md         runserver.bat          test-interface
+CreateBaseFormAPI.bat  requirements.txt  simple-interface.html
+phong@phong:~/api-interface1$ python3 -m venv .venv
+The virtual environment was not created successfully because ensurepip is not
+available.  On Debian/Ubuntu systems, you need to install the python3-venv
+package using the following command.
+
+    apt install python3.12-venv
+
+You may need to use sudo with that command.  After installing the python3-venv
+package, recreate your virtual environment.
+
+Failing command: /home/phong/api-interface1/.venv/bin/python3
+
+phong@phong:~/api-interface1$ ^C
+phong@phong:~/api-interface1$ sudo apt install python3.12-venv -y
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following additional packages will be installed:
+  python3-pip-whl python3-setuptools-whl
+The following NEW packages will be installed:
+  python3-pip-whl python3-setuptools-whl python3.12-venv
+0 upgraded, 3 newly installed, 0 to remove and 1 not upgraded.
+Need to get 2,425 kB of archives.
+After this operation, 2,771 kB of additional disk space will be used.
+Get:1 http://vn.archive.ubuntu.com/ubuntu noble-updates/universe amd64 python3-pip-whl all 24.0+dfsg-1ubuntu1.2 [1,703 kB]
+Get:2 http://vn.archive.ubuntu.com/ubuntu noble-updates/universe amd64 python3-setuptools-whl all 68.1.2-2ubuntu1.2 [716 kB]
+Get:3 http://vn.archive.ubuntu.com/ubuntu noble-updates/universe amd64 python3.12-venv amd64 3.12.3-1ubuntu0.8 [5,678 B]
+Fetched 2,425 kB in 1s (3,963 kB/s)         
+Selecting previously unselected package python3-pip-whl.
+(Reading database ... 86990 files and directories currently installed.)
+Preparing to unpack .../python3-pip-whl_24.0+dfsg-1ubuntu1.2_all.deb ...
+Unpacking python3-pip-whl (24.0+dfsg-1ubuntu1.2) ...
+Selecting previously unselected package python3-setuptools-whl.
+Preparing to unpack .../python3-setuptools-whl_68.1.2-2ubuntu1.2_all.deb ...
+Unpacking python3-setuptools-whl (68.1.2-2ubuntu1.2) ...
+Selecting previously unselected package python3.12-venv.
+Preparing to unpack .../python3.12-venv_3.12.3-1ubuntu0.8_amd64.deb ...
+Unpacking python3.12-venv (3.12.3-1ubuntu0.8) ...
+Setting up python3-setuptools-whl (68.1.2-2ubuntu1.2) ...
+Setting up python3-pip-whl (24.0+dfsg-1ubuntu1.2) ...
+Setting up python3.12-venv (3.12.3-1ubuntu0.8) ...
+Scanning processes...                                                                           
+Scanning linux images...                                                                        
+
+Running kernel seems to be up-to-date.
+
+No services need to be restarted.
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+phong@phong:~/api-interface1$ sudo apt install python3.11-venv -y
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+E: Unable to locate package python3.11-venv
+E: Couldn't find any package by glob 'python3.11-venv'
+phong@phong:~/api-interface1$ ls /usr/bin/python3*
+/usr/bin/python3  /usr/bin/python3.12
+phong@phong:~/api-interface1$ sudo apt remove --purge python3.12 python3.12-venv python3.12-distutils -y
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+E: Unable to locate package python3.12-distutils
+E: Couldn't find any package by glob 'python3.12-distutils'
+phong@phong:~/api-interface1$ ls /usr/bin/python3*
+/usr/bin/python3  /usr/bin/python3.12
+phong@phong:~/api-interface1$ sudo apt autoremove -y
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+0 upgraded, 0 newly installed, 0 to remove and 1 not upgraded.
+phong@phong:~/api-interface1$ ls /usr/bin/python3*
+/usr/bin/python3  /usr/bin/python3.12
+phong@phong:~/api-interface1$ sudo apt update
+Hit:1 http://vn.archive.ubuntu.com/ubuntu noble InRelease
+Hit:2 http://vn.archive.ubuntu.com/ubuntu noble-updates InRelease            
+Hit:3 http://vn.archive.ubuntu.com/ubuntu noble-backports InRelease          
+Hit:4 http://security.ubuntu.com/ubuntu noble-security InRelease
+Reading package lists... Done                          
+Building dependency tree... Done
+Reading state information... Done
+1 package can be upgraded. Run 'apt list --upgradable' to see it.
+phong@phong:~/api-interface1$ sudo apt install python3.11 python3.11-venv python3.11-distutils -y
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+E: Unable to locate package python3.11
+E: Couldn't find any package by glob 'python3.11'
+E: Unable to locate package python3.11-venv
+E: Couldn't find any package by glob 'python3.11-venv'
+E: Unable to locate package python3.11-distutils
+E: Couldn't find any package by glob 'python3.11-distutils'
+phong@phong:~/api-interface1$ cd ~
+phong@phong:~$ wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+--2025-09-09 10:11:29--  https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+Resolving repo.anaconda.com (repo.anaconda.com)... 104.16.32.241, 104.16.191.158, 2606:4700::6810:20f1, ...
+Connecting to repo.anaconda.com (repo.anaconda.com)|104.16.32.241|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 162129736 (155M) [application/octet-stream]
+Saving to: ‘Miniconda3-latest-Linux-x86_64.sh’
+
+Miniconda3-latest-Linux 100%[===============================>] 154.62M  7.21MB/s    in 14s     
+
+2025-09-09 10:11:43 (10.7 MB/s) - ‘Miniconda3-latest-Linux-x86_64.sh’ saved [162129736/162129736]
+
+phong@phong:~$ bash Miniconda3-latest-Linux-x86_64.sh
+
+Welcome to Miniconda3 py313_25.7.0-2
+
+In order to continue the installation process, please review the license
+agreement.
+Please, press ENTER to continue
+>>> 
+MINICONDA END USER LICENSE AGREEMENT
+
+Copyright Notice: Miniconda(R) (C) 2015, Anaconda, Inc.
+All rights reserved. Miniconda(R) is licensed, not sold.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer;
+
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the 
+distribution;
+
+3. The name Anaconda, Inc. or Miniconda(R) may not be used to endorse or promote products derived from this software without specific prior written permission from Anaconda, Inc.; and
+
+4. Miniconda(R) may not be used to access or allow third parties to access Anaconda package repositories if such use would circumvent paid licensing requirements or is otherwise restricted by 
+the Anaconda Terms of Service.
+
+DISCLAIMER: THIS SOFTWARE IS PROVIDED BY ANACONDA "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE , AND NON-INFRINGEMENT ARE DISCLAIMED. IN NO EVENT SHALL ANACONDA BE LIABLE FOR ANY 
+DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF MINICONDA(R), EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+Do you accept the license terms? [yes|no]
+>>> yes
+Please answer 'yes' or 'no':'
+>>> yes
+Please answer 'yes' or 'no':'
+>>> 'yes'
+Please answer 'yes' or 'no':'
+>>> yes
+Please answer 'yes' or 'no':'
+>>> no
+The license agreement wasn't approved, aborting installation.
+phong@phong:~$  wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+--2025-09-09 10:12:57--  https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+Resolving repo.anaconda.com (repo.anaconda.com)... 104.16.32.241, 104.16.191.158, 2606:4700::6810:bf9e, ...
+Connecting to repo.anaconda.com (repo.anaconda.com)|104.16.32.241|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 162129736 (155M) [application/octet-stream]
+Saving to: ‘Miniconda3-latest-Linux-x86_64.sh.1’
+
+Miniconda3-latest-Linux 100%[===============================>] 154.62M  1.97MB/s    in 1m 49s  
+
+2025-09-09 10:14:46 (1.42 MB/s) - ‘Miniconda3-latest-Linux-x86_64.sh.1’ saved [162129736/162129736]
+
+phong@phong:~$ conda --version
+conda: command not found
+phong@phong:~$ source ~/.bashrc
+phong@phong:~$ conda --version
+conda: command not found
+phong@phong:~$ conda create -n myenv python=3.11 -y
+conda: command not found
+phong@phong:~$ conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main
+conda: command not found
+phong@phong:~$ export PATH="/root/miniconda3/bin:$PATH"
+phong@phong:~$ conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main
+conda: command not found
+phong@phong:~$ bash Miniconda3-latest-Linux-x86_64.sh
+
+Welcome to Miniconda3 py313_25.7.0-2
+
+In order to continue the installation process, please review the license
+agreement.
+Please, press ENTER to continue
+>>> 
+MINICONDA END USER LICENSE AGREEMENT
+
+Copyright Notice: Miniconda(R) (C) 2015, Anaconda, Inc.
+All rights reserved. Miniconda(R) is licensed, not sold.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer;
+
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the 
+distribution;
+
+3. The name Anaconda, Inc. or Miniconda(R) may not be used to endorse or promote products derived from this software without specific prior written permission from Anaconda, Inc.; and
+
+4. Miniconda(R) may not be used to access or allow third parties to access Anaconda package repositories if such use would circumvent paid licensing requirements or is otherwise restricted by 
+the Anaconda Terms of Service.
+
+DISCLAIMER: THIS SOFTWARE IS PROVIDED BY ANACONDA "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE , AND NON-INFRINGEMENT ARE DISCLAIMED. IN NO EVENT SHALL ANACONDA BE LIABLE FOR ANY 
+DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF MINICONDA(R), EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+Do you accept the license terms? [yes|no]
+>>> yes
+
+Miniconda3 will now be installed into this location:
+/home/phong/miniconda3
+
+  - Press ENTER to confirm the location
+  - Press CTRL-C to abort the installation
+  - Or specify a different location below
+
+[/home/phong/miniconda3] >>> 
+PREFIX=/home/phong/miniconda3
+Unpacking bootstrapper...
+Unpacking payload...
+                                                                                                
+Installing base environment...
+
+
+Downloading and Extracting Packages:
+
+
+## Package Plan ##
+
+  environment location: /home/phong/miniconda3
+
+  added / updated specs:
+    - defaults/linux-64::_libgcc_mutex==0.1=main[md5=c3473ff8bdb3d124ed5ff11ec380d6f9]
+    - defaults/linux-64::_openmp_mutex==5.1=1_gnu[md5=71d281e9c2192cb3fa425655a8defb85]
+    - defaults/linux-64::anaconda-anon-usage==0.7.2=py313hfc0e8ea_100[md5=c6ea2f8456510ea049a5f05fead4b9b1]
+    - defaults/linux-64::anaconda-auth==0.8.6=py313h06a4308_0[md5=1b575dad8e7084c59cfd8f8c4a2bd421]
+    - defaults/linux-64::anaconda-cli-base==0.5.2=py313h06a4308_0[md5=d629fb0a0282b3adcf8f53ab82b63ad4]
+    - defaults/linux-64::annotated-types==0.6.0=py313h06a4308_0[md5=4dc276db59e14eaf187426b0040eb209]
+    - defaults/linux-64::boltons==25.0.0=py313h06a4308_0[md5=afd30cc40ab0edf4e246b901c8eca725]
+    - defaults/linux-64::brotlicffi==1.0.9.2=py313h6a678d5_1[md5=256e218354e6ffcd32269368b5b9590d]
+    - defaults/linux-64::bzip2==1.0.8=h5eee18b_6[md5=f21a3ff51c1b271977f53ce956a69297]
+    - defaults/linux-64::c-ares==1.34.5=hef5626c_0[md5=4a0059c416e26b3c5e8a8fdf11dfa811]
+    - defaults/linux-64::ca-certificates==2025.7.15=h06a4308_0[md5=a65eaddc4f9529b9c908f544ca50e7e0]
+    - defaults/linux-64::certifi==2025.8.3=py313h06a4308_0[md5=1d24ffefc1375c97ae5c5175235aa724]    - defaults/linux-64::cffi==1.17.1=py313h1fdaa30_1[md5=c5d4f727e7bccd4bd8d599e049853383]
+    - defaults/linux-64::click==8.2.1=py313h06a4308_0[md5=a4fe8d908fee44662a5667b40506cba5]
+    - defaults/linux-64::colorama==0.4.6=py313h06a4308_0[md5=9c0c672e71bd0523bdaa9376ea056ebd]
+    - defaults/linux-64::conda-anaconda-tos==0.2.2=py313h06a4308_1[md5=48b92f96da51225fe57f3fe687eec943]
+    - defaults/linux-64::conda-content-trust==0.2.0=py313h06a4308_1[md5=aefc551e21e13ecc1de44ee589aea77d]
+    - defaults/linux-64::conda-package-handling==2.4.0=py313h06a4308_0[md5=76b17c263bc01eaffebcb8ba7ccd6ca9]
+    - defaults/linux-64::conda-package-streaming==0.12.0=py313h06a4308_0[md5=adef8a1cc0462068a51c68144f05be3c]
+    - defaults/linux-64::conda==25.7.0=py313h06a4308_0[md5=2137e3bdfcba2a2bef4531b76d2f07ea]
+    - defaults/linux-64::cpp-expected==1.1.0=hdb19cb5_0[md5=3a195bcf47b691adb4a635a8b7f396f7]
+    - defaults/linux-64::cryptography==45.0.5=py313hea9ce0a_0[md5=e70a5914e157eb138c4620aab7bc17d9]
+    - defaults/linux-64::dbus==1.16.2=h5bd4931_0[md5=4c4aef417b613e7111d90cf2348b231a]
+    - defaults/linux-64::distro==1.9.0=py313h06a4308_0[md5=1fd7ab065e9958e7bbd4d3fbf175742b]
+    - defaults/linux-64::expat==2.7.1=h6a678d5_0[md5=269942a9f3f943e2e5d8a2516a861f7c]
+    - defaults/linux-64::fmt==9.1.0=hdb19cb5_1[md5=4f12930203ff2d84df5d287af9b29858]
+    - defaults/linux-64::frozendict==2.4.2=py313h06a4308_0[md5=31f7036f9bdd3592e660ecfc631f054f]    - defaults/linux-64::icu==73.1=h6a678d5_0[md5=6d09df641fc23f7d277a04dc7ea32dd4]
+    - defaults/linux-64::idna==3.7=py313h06a4308_0[md5=f3e7d3ba37b45ef8782dd643d7e9733b]
+    - defaults/linux-64::jaraco.classes==3.4.0=py313h06a4308_0[md5=c4ea3f7208a811b569bbeae8c42c5b2d]
+    - defaults/linux-64::jaraco.context==6.0.0=py313h06a4308_0[md5=568af8d43ff7c6e7ecdc725bdc860053]
+    - defaults/linux-64::jaraco.functools==4.1.0=py313h06a4308_0[md5=472d048415f35e29b8b39a6cfc947ccd]
+    - defaults/linux-64::jsonpatch==1.33=py313h06a4308_1[md5=8cb4b1755a4a8fd6a57883863236ef2b]
+    - defaults/linux-64::jsonpointer==3.0.0=py313h06a4308_0[md5=af07fefbc353b9e3292ad9e0d563d9be]
+    - defaults/linux-64::keyring==25.6.0=py313h06a4308_0[md5=611301eaa58f7a2c9eb37376dbd84fea]
+    - defaults/linux-64::ld_impl_linux-64==2.40=h12ee557_0[md5=ee672b5f635340734f58d618b7bca024]    - defaults/linux-64::libarchive==3.7.7=hfab0078_0[md5=c208e4f83c30250d659102b271e8d4e6]
+    - defaults/linux-64::libcurl==8.14.1=hc1efc7f_1[md5=e2d948b1b2c79337d29d294bb3698e16]
+    - defaults/linux-64::libev==4.33=h7f8727e_1[md5=5065620db4393fb549f30114a33897d1]
+    - defaults/linux-64::libffi==3.4.4=h6a678d5_1[md5=70646cc713f0c43926cfdcfe9b695fe0]
+    - defaults/linux-64::libgcc-ng==11.2.0=h1234567_1[md5=a87728dabf3151fb9cfa990bd2eb0464]
+    - defaults/linux-64::libgomp==11.2.0=h1234567_1[md5=b372c0eea9b60732fdae4b817a63c8cd]
+    - defaults/linux-64::libmamba==2.0.5=haf1ee3a_1[md5=0f1450592dc7555e315f5d684ce481eb]
+    - defaults/linux-64::libmambapy==2.0.5=py313hdb19cb5_1[md5=c56ed0c34af1a360984e20bf13200007]    - defaults/linux-64::libmpdec==4.0.0=h5eee18b_0[md5=feb10f42b1a7b523acbf85461be41a3e]
+    - defaults/linux-64::libnghttp2==1.57.0=h2d74bed_0[md5=674871621300f54e7ffcf93e6e341638]
+    - defaults/linux-64::libsolv==0.7.30=he621ea3_1[md5=6918c29c4b65f21c71aac679b49c02e4]
+    - defaults/linux-64::libssh2==1.11.1=h251f7ec_0[md5=dd68c24355431c0543339dda1404129d]
+    - defaults/linux-64::libstdcxx-ng==11.2.0=h1234567_1[md5=57623d10a70e09e1d048c2b2b6f4e2dd]
+    - defaults/linux-64::libuuid==1.41.5=h5eee18b_0[md5=4a6a2354414c9080327274aa514e5299]
+    - defaults/linux-64::libxcb==1.17.0=h9b100fa_0[md5=fdf0d380fa3809a301e2dbc0d5183883]
+    - defaults/linux-64::libxml2==2.13.8=hfdd30dd_0[md5=6da89b526f12f128af101c3f70d12c6d]
+    - defaults/linux-64::lz4-c==1.9.4=h6a678d5_1[md5=2ee58861f2b92b868ce761abb831819d]
+    - defaults/linux-64::markdown-it-py==2.2.0=py313h06a4308_1[md5=0c3ee40437213e528c99bff0bcc5a942]
+    - defaults/linux-64::mdurl==0.1.0=py313h06a4308_0[md5=5bca585008b9e6ce6997871309117479]
+    - defaults/linux-64::menuinst==2.3.1=py313h06a4308_0[md5=215cd4c223b3ab647d025f347d35c058]
+    - defaults/linux-64::more-itertools==10.3.0=py313h06a4308_0[md5=ee08e17a18339269f11ba3109f4fb225]
+    - defaults/linux-64::ncurses==6.5=h7934f7d_0[md5=0abfc090299da4bb031b84c64309757b]
+    - defaults/linux-64::nlohmann_json==3.11.2=h6a678d5_0[md5=36890f7abd98066b607211b1773e6343]
+    - defaults/linux-64::openssl==3.0.17=h5eee18b_0[md5=c032152f4080dd61875d5047641c8bf2]
+    - defaults/linux-64::packaging==25.0=py313h06a4308_0[md5=7396e4349c90a320cb4aa1edf684886d]
+    - defaults/linux-64::pcre2==10.42=hebb0a14_1[md5=727e15c3cfa02b032da4eb0c1123e977]
+    - defaults/linux-64::pkce==1.0.3=py313h06a4308_0[md5=a1e79da30a6c62c6398e9bb990ee9ed6]
+    - defaults/linux-64::platformdirs==4.3.7=py313h06a4308_0[md5=6cdbb54f78166c07399004f961726487]
+    - defaults/linux-64::pluggy==1.5.0=py313h06a4308_0[md5=ea142d52281afe8e9a79e4a33c023e41]
+    - defaults/linux-64::pthread-stubs==0.3=h0ce48e5_1[md5=973a642312d2a28927aaf5b477c67250]
+    - defaults/linux-64::pycosat==0.6.6=py313h5eee18b_2[md5=60ea7416e08d78563e31d16c333bd57f]
+    - defaults/linux-64::pydantic-core==2.33.2=py313hc6f7160_0[md5=5d5a3d0469b467688a13f505e77639ef]
+    - defaults/linux-64::pydantic-settings==2.6.1=py313h06a4308_0[md5=37546fa6cc30a5a794b9dd505368eb84]
+    - defaults/linux-64::pydantic==2.11.7=py313h06a4308_0[md5=7c8e28d9eb0dbf8b3bea0aa9f28f8c17]
+    - defaults/linux-64::pygments==2.19.1=py313h06a4308_0[md5=8fcbba71964f3d4d936e846c3bc9fb13]
+    - defaults/linux-64::pyjwt==2.10.1=py313h06a4308_0[md5=2c17b6fb0a6100caada2e7ee72308bec]
+    - defaults/linux-64::pysocks==1.7.1=py313h06a4308_0[md5=a493580ce366b942a8e1c00ee00c4182]
+    - defaults/linux-64::python-dotenv==1.1.0=py313h06a4308_0[md5=33e2c8b6a83ba5bdbda0639bfb37496c]
+    - defaults/linux-64::python==3.13.5=h4612cfd_100_cp313[md5=1adf42b71c42a4a540eae2c0026f02c3]    - defaults/linux-64::python_abi==3.13=0_cp313[md5=d4009c49dd2b54ffded7f1365b5f6505]
+    - defaults/linux-64::readchar==4.0.5=py313h06a4308_0[md5=42a02a52ac3364e165087e5c753b40ce]
+    - defaults/linux-64::readline==8.3=hc2a1206_0[md5=8578e006d4ef5cb98a6cda232b3490f6]
+    - defaults/linux-64::reproc-cpp==14.2.4=h6a678d5_2[md5=b03aa4903158279f003e7032ab9f5601]
+    - defaults/linux-64::reproc==14.2.4=h6a678d5_2[md5=3c6dbc6c60b3897222d79359343e90fa]
+    - defaults/linux-64::requests==2.32.4=py313h06a4308_0[md5=c1790ae25dc021a7c6073ace845d8f55]
+    - defaults/linux-64::rich==13.9.4=py313h06a4308_0[md5=29573c0e57aea86c5d68759975638187]
+    - defaults/linux-64::ruamel.yaml.clib==0.2.12=py313h5eee18b_0[md5=d9da5a7327cd6c9ee11d7b7ac1b7d082]
+    - defaults/linux-64::ruamel.yaml==0.18.10=py313h5eee18b_0[md5=70c6985c0871d511a94afb1e8537943f]
+    - defaults/linux-64::secretstorage==3.3.1=py313h06a4308_1[md5=bd9d99500717e83799f51f36825e6c2a]
+    - defaults/linux-64::semver==3.0.2=py313h06a4308_1[md5=42fd2505022b95daa0061e091c9ddcda]
+    - defaults/linux-64::setuptools==78.1.1=py313h06a4308_0[md5=8f8e1c1e3af9d2d371aaa0ee8316ae7c]
+    - defaults/linux-64::shellingham==1.5.0=py313h06a4308_0[md5=fec77e08b241c9bae71940db00e14b65]
+    - defaults/linux-64::simdjson==3.10.1=hdb19cb5_0[md5=7b2a4b5be590071e1b4dce77b413d26a]
+    - defaults/linux-64::spdlog==1.11.0=hdb19cb5_0[md5=023cfe6341f1d90dee2016e608538537]
+    - defaults/linux-64::sqlite==3.50.2=hb25bd0a_1[md5=6ac08aa6b5f14911039aa04b2b2c3350]
+    - defaults/linux-64::tk==8.6.15=h54e0aa7_0[md5=1fa91e0c4fc9c9435eda3f1a25a676fd]
+    - defaults/linux-64::tomli==2.2.1=py313h06a4308_0[md5=4ae62c3391e11617a9f6d9556d8062c7]
+    - defaults/linux-64::tqdm==4.67.1=py313h7040dfc_0[md5=2efb4b3310f058cb95d326989bddc761]
+    - defaults/linux-64::truststore==0.10.1=py313h06a4308_0[md5=fee67c1946f31ba7b45962c20b7b1d8c]
+    - defaults/linux-64::typer==0.9.0=py313h06a4308_0[md5=7c1a4cd7cd5bc54f1460e0e2a8c5c0a3]
+    - defaults/linux-64::typing-extensions==4.12.2=py313h06a4308_0[md5=f011fee76cd912d47567c6cedb0074c9]
+    - defaults/linux-64::typing-inspection==0.4.0=py313h06a4308_0[md5=b9349b70ca836c55debbaa5b544b0c3c]
+    - defaults/linux-64::typing_extensions==4.12.2=py313h06a4308_0[md5=e1a419944c11dc4592cdce114d0a3063]
+    - defaults/linux-64::urllib3==2.5.0=py313h06a4308_0[md5=8739060177d7ed31cd7292efc5bcc91e]
+    - defaults/linux-64::wheel==0.45.1=py313h06a4308_0[md5=29057e876eedce0e37c2388c138a19f9]
+    - defaults/linux-64::xorg-libx11==1.8.12=h9b100fa_1[md5=6298b27afae6f49f03765b2a03df2fcb]
+    - defaults/linux-64::xorg-libxau==1.0.12=h9b100fa_0[md5=a8005a9f6eb903e113cd5363e8a11459]
+    - defaults/linux-64::xorg-libxdmcp==1.1.5=h9b100fa_0[md5=c284a09ddfba81d9c4e740110f09ea06]
+    - defaults/linux-64::xorg-xorgproto==2024.1=h5eee18b_1[md5=412a0d97a7a51d23326e57226189da92]    - defaults/linux-64::xz==5.6.4=h5eee18b_1[md5=3581505fa450962d631bd82b8616350e]
+    - defaults/linux-64::yaml-cpp==0.8.0=h6a678d5_1[md5=015d2d74ad3c8e53eec3358637433718]
+    - defaults/linux-64::zlib==1.2.13=h5eee18b_1[md5=92e42d8310108b0a440fb2e60b2b2a25]
+    - defaults/linux-64::zstandard==0.23.0=py313h2c38b39_1[md5=5b4bd26f9d674331122482d3c2ac0afe]    - defaults/linux-64::zstd==1.5.6=hc292b87_0[md5=78ae7abd3020b41f827b35085845e1b8]
+    - defaults/noarch::archspec==0.2.3=pyhd3eb1b0_0[md5=13d01ee2d343d8539bb47055a6c0b5b2]
+    - defaults/noarch::charset-normalizer==3.3.2=pyhd3eb1b0_0[md5=c6fea3691e85cf7f568b0618ec29fc4f]
+    - defaults/noarch::conda-anaconda-telemetry==0.3.0=pyhd3eb1b0_1[md5=2ac481091c9cc4eec50cf2f0cc42744d]
+    - defaults/noarch::conda-libmamba-solver==25.4.0=pyhd3eb1b0_0[md5=77ff27567894c7ea3eb908489e5d3e5c]
+    - defaults/noarch::jeepney==0.7.1=pyhd3eb1b0_0[md5=f115ef0af90b59f35ef56743955979a4]
+    - defaults/noarch::pip==25.1=pyhc872135_2[md5=2778327d2a700153fefe0e69438b18e1]
+    - defaults/noarch::pybind11-abi==5=hd3eb1b0_0[md5=7f0df6639fdf60ccd3045ee6faedd32f]
+    - defaults/noarch::pycparser==2.21=pyhd3eb1b0_0[md5=135a72ff2a31150a3a3ff0b1edd41ca9]
+    - defaults/noarch::tzdata==2025b=h04d1e81_0[md5=1d027393db3427ab22a02aa44a56f143]
+
+
+The following NEW packages will be INSTALLED:
+
+  _libgcc_mutex      pkgs/main/linux-64::_libgcc_mutex-0.1-main 
+  _openmp_mutex      pkgs/main/linux-64::_openmp_mutex-5.1-1_gnu 
+  anaconda-anon-usa~ pkgs/main/linux-64::anaconda-anon-usage-0.7.2-py313hfc0e8ea_100 
+  anaconda-auth      pkgs/main/linux-64::anaconda-auth-0.8.6-py313h06a4308_0 
+  anaconda-cli-base  pkgs/main/linux-64::anaconda-cli-base-0.5.2-py313h06a4308_0 
+  annotated-types    pkgs/main/linux-64::annotated-types-0.6.0-py313h06a4308_0 
+  archspec           pkgs/main/noarch::archspec-0.2.3-pyhd3eb1b0_0 
+  boltons            pkgs/main/linux-64::boltons-25.0.0-py313h06a4308_0 
+  brotlicffi         pkgs/main/linux-64::brotlicffi-1.0.9.2-py313h6a678d5_1 
+  bzip2              pkgs/main/linux-64::bzip2-1.0.8-h5eee18b_6 
+  c-ares             pkgs/main/linux-64::c-ares-1.34.5-hef5626c_0 
+  ca-certificates    pkgs/main/linux-64::ca-certificates-2025.7.15-h06a4308_0 
+  certifi            pkgs/main/linux-64::certifi-2025.8.3-py313h06a4308_0 
+  cffi               pkgs/main/linux-64::cffi-1.17.1-py313h1fdaa30_1 
+  charset-normalizer pkgs/main/noarch::charset-normalizer-3.3.2-pyhd3eb1b0_0 
+  click              pkgs/main/linux-64::click-8.2.1-py313h06a4308_0 
+  colorama           pkgs/main/linux-64::colorama-0.4.6-py313h06a4308_0 
+  conda              pkgs/main/linux-64::conda-25.7.0-py313h06a4308_0 
+  conda-anaconda-te~ pkgs/main/noarch::conda-anaconda-telemetry-0.3.0-pyhd3eb1b0_1 
+  conda-anaconda-tos pkgs/main/linux-64::conda-anaconda-tos-0.2.2-py313h06a4308_1 
+  conda-content-tru~ pkgs/main/linux-64::conda-content-trust-0.2.0-py313h06a4308_1 
+  conda-libmamba-so~ pkgs/main/noarch::conda-libmamba-solver-25.4.0-pyhd3eb1b0_0 
+  conda-package-han~ pkgs/main/linux-64::conda-package-handling-2.4.0-py313h06a4308_0 
+  conda-package-str~ pkgs/main/linux-64::conda-package-streaming-0.12.0-py313h06a4308_0 
+  cpp-expected       pkgs/main/linux-64::cpp-expected-1.1.0-hdb19cb5_0 
+  cryptography       pkgs/main/linux-64::cryptography-45.0.5-py313hea9ce0a_0 
+  dbus               pkgs/main/linux-64::dbus-1.16.2-h5bd4931_0 
+  distro             pkgs/main/linux-64::distro-1.9.0-py313h06a4308_0 
+  expat              pkgs/main/linux-64::expat-2.7.1-h6a678d5_0 
+  fmt                pkgs/main/linux-64::fmt-9.1.0-hdb19cb5_1 
+  frozendict         pkgs/main/linux-64::frozendict-2.4.2-py313h06a4308_0 
+  icu                pkgs/main/linux-64::icu-73.1-h6a678d5_0 
+  idna               pkgs/main/linux-64::idna-3.7-py313h06a4308_0 
+  jaraco.classes     pkgs/main/linux-64::jaraco.classes-3.4.0-py313h06a4308_0 
+  jaraco.context     pkgs/main/linux-64::jaraco.context-6.0.0-py313h06a4308_0 
+  jaraco.functools   pkgs/main/linux-64::jaraco.functools-4.1.0-py313h06a4308_0 
+  jeepney            pkgs/main/noarch::jeepney-0.7.1-pyhd3eb1b0_0 
+  jsonpatch          pkgs/main/linux-64::jsonpatch-1.33-py313h06a4308_1 
+  jsonpointer        pkgs/main/linux-64::jsonpointer-3.0.0-py313h06a4308_0 
+  keyring            pkgs/main/linux-64::keyring-25.6.0-py313h06a4308_0 
+  ld_impl_linux-64   pkgs/main/linux-64::ld_impl_linux-64-2.40-h12ee557_0 
+  libarchive         pkgs/main/linux-64::libarchive-3.7.7-hfab0078_0 
+  libcurl            pkgs/main/linux-64::libcurl-8.14.1-hc1efc7f_1 
+  libev              pkgs/main/linux-64::libev-4.33-h7f8727e_1 
+  libffi             pkgs/main/linux-64::libffi-3.4.4-h6a678d5_1 
+  libgcc-ng          pkgs/main/linux-64::libgcc-ng-11.2.0-h1234567_1 
+  libgomp            pkgs/main/linux-64::libgomp-11.2.0-h1234567_1 
+  libmamba           pkgs/main/linux-64::libmamba-2.0.5-haf1ee3a_1 
+  libmambapy         pkgs/main/linux-64::libmambapy-2.0.5-py313hdb19cb5_1 
+  libmpdec           pkgs/main/linux-64::libmpdec-4.0.0-h5eee18b_0 
+  libnghttp2         pkgs/main/linux-64::libnghttp2-1.57.0-h2d74bed_0 
+  libsolv            pkgs/main/linux-64::libsolv-0.7.30-he621ea3_1 
+  libssh2            pkgs/main/linux-64::libssh2-1.11.1-h251f7ec_0 
+  libstdcxx-ng       pkgs/main/linux-64::libstdcxx-ng-11.2.0-h1234567_1 
+  libuuid            pkgs/main/linux-64::libuuid-1.41.5-h5eee18b_0 
+  libxcb             pkgs/main/linux-64::libxcb-1.17.0-h9b100fa_0 
+  libxml2            pkgs/main/linux-64::libxml2-2.13.8-hfdd30dd_0 
+  lz4-c              pkgs/main/linux-64::lz4-c-1.9.4-h6a678d5_1 
+  markdown-it-py     pkgs/main/linux-64::markdown-it-py-2.2.0-py313h06a4308_1 
+  mdurl              pkgs/main/linux-64::mdurl-0.1.0-py313h06a4308_0 
+  menuinst           pkgs/main/linux-64::menuinst-2.3.1-py313h06a4308_0 
+  more-itertools     pkgs/main/linux-64::more-itertools-10.3.0-py313h06a4308_0 
+  ncurses            pkgs/main/linux-64::ncurses-6.5-h7934f7d_0 
+  nlohmann_json      pkgs/main/linux-64::nlohmann_json-3.11.2-h6a678d5_0 
+  openssl            pkgs/main/linux-64::openssl-3.0.17-h5eee18b_0 
+  packaging          pkgs/main/linux-64::packaging-25.0-py313h06a4308_0 
+  pcre2              pkgs/main/linux-64::pcre2-10.42-hebb0a14_1 
+  pip                pkgs/main/noarch::pip-25.1-pyhc872135_2 
+  pkce               pkgs/main/linux-64::pkce-1.0.3-py313h06a4308_0 
+  platformdirs       pkgs/main/linux-64::platformdirs-4.3.7-py313h06a4308_0 
+  pluggy             pkgs/main/linux-64::pluggy-1.5.0-py313h06a4308_0 
+  pthread-stubs      pkgs/main/linux-64::pthread-stubs-0.3-h0ce48e5_1 
+  pybind11-abi       pkgs/main/noarch::pybind11-abi-5-hd3eb1b0_0 
+  pycosat            pkgs/main/linux-64::pycosat-0.6.6-py313h5eee18b_2 
+  pycparser          pkgs/main/noarch::pycparser-2.21-pyhd3eb1b0_0 
+  pydantic           pkgs/main/linux-64::pydantic-2.11.7-py313h06a4308_0 
+  pydantic-core      pkgs/main/linux-64::pydantic-core-2.33.2-py313hc6f7160_0 
+  pydantic-settings  pkgs/main/linux-64::pydantic-settings-2.6.1-py313h06a4308_0 
+  pygments           pkgs/main/linux-64::pygments-2.19.1-py313h06a4308_0 
+  pyjwt              pkgs/main/linux-64::pyjwt-2.10.1-py313h06a4308_0 
+  pysocks            pkgs/main/linux-64::pysocks-1.7.1-py313h06a4308_0 
+  python             pkgs/main/linux-64::python-3.13.5-h4612cfd_100_cp313 
+  python-dotenv      pkgs/main/linux-64::python-dotenv-1.1.0-py313h06a4308_0 
+  python_abi         pkgs/main/linux-64::python_abi-3.13-0_cp313 
+  readchar           pkgs/main/linux-64::readchar-4.0.5-py313h06a4308_0 
+  readline           pkgs/main/linux-64::readline-8.3-hc2a1206_0 
+  reproc             pkgs/main/linux-64::reproc-14.2.4-h6a678d5_2 
+  reproc-cpp         pkgs/main/linux-64::reproc-cpp-14.2.4-h6a678d5_2 
+  requests           pkgs/main/linux-64::requests-2.32.4-py313h06a4308_0 
+  rich               pkgs/main/linux-64::rich-13.9.4-py313h06a4308_0 
+  ruamel.yaml        pkgs/main/linux-64::ruamel.yaml-0.18.10-py313h5eee18b_0 
+  ruamel.yaml.clib   pkgs/main/linux-64::ruamel.yaml.clib-0.2.12-py313h5eee18b_0 
+  secretstorage      pkgs/main/linux-64::secretstorage-3.3.1-py313h06a4308_1 
+  semver             pkgs/main/linux-64::semver-3.0.2-py313h06a4308_1 
+  setuptools         pkgs/main/linux-64::setuptools-78.1.1-py313h06a4308_0 
+  shellingham        pkgs/main/linux-64::shellingham-1.5.0-py313h06a4308_0 
+  simdjson           pkgs/main/linux-64::simdjson-3.10.1-hdb19cb5_0 
+  spdlog             pkgs/main/linux-64::spdlog-1.11.0-hdb19cb5_0 
+  sqlite             pkgs/main/linux-64::sqlite-3.50.2-hb25bd0a_1 
+  tk                 pkgs/main/linux-64::tk-8.6.15-h54e0aa7_0 
+  tomli              pkgs/main/linux-64::tomli-2.2.1-py313h06a4308_0 
+  tqdm               pkgs/main/linux-64::tqdm-4.67.1-py313h7040dfc_0 
+  truststore         pkgs/main/linux-64::truststore-0.10.1-py313h06a4308_0 
+  typer              pkgs/main/linux-64::typer-0.9.0-py313h06a4308_0 
+  typing-extensions  pkgs/main/linux-64::typing-extensions-4.12.2-py313h06a4308_0 
+  typing-inspection  pkgs/main/linux-64::typing-inspection-0.4.0-py313h06a4308_0 
+  typing_extensions  pkgs/main/linux-64::typing_extensions-4.12.2-py313h06a4308_0 
+  tzdata             pkgs/main/noarch::tzdata-2025b-h04d1e81_0 
+  urllib3            pkgs/main/linux-64::urllib3-2.5.0-py313h06a4308_0 
+  wheel              pkgs/main/linux-64::wheel-0.45.1-py313h06a4308_0 
+  xorg-libx11        pkgs/main/linux-64::xorg-libx11-1.8.12-h9b100fa_1 
+  xorg-libxau        pkgs/main/linux-64::xorg-libxau-1.0.12-h9b100fa_0 
+  xorg-libxdmcp      pkgs/main/linux-64::xorg-libxdmcp-1.1.5-h9b100fa_0 
+  xorg-xorgproto     pkgs/main/linux-64::xorg-xorgproto-2024.1-h5eee18b_1 
+  xz                 pkgs/main/linux-64::xz-5.6.4-h5eee18b_1 
+  yaml-cpp           pkgs/main/linux-64::yaml-cpp-0.8.0-h6a678d5_1 
+  zlib               pkgs/main/linux-64::zlib-1.2.13-h5eee18b_1 
+  zstandard          pkgs/main/linux-64::zstandard-0.23.0-py313h2c38b39_1 
+  zstd               pkgs/main/linux-64::zstd-1.5.6-hc292b87_0 
+
+
+
+Downloading and Extracting Packages:
+
+Preparing transaction: done
+Executing transaction: done
+installation finished.
+Do you wish to update your shell profile to automatically initialize conda?
+This will activate conda on startup and change the command prompt when activated.
+If you'd prefer that conda's base environment not be activated on startup,
+   run the following command when conda is activated:
+
+conda config --set auto_activate_base false
+
+You can undo this by running `conda init --reverse $SHELL`? [yes|no]
+[no] >>> 
+
+You have chosen to not have conda modify your shell scripts at all.
+To activate conda's base environment in your current shell session:
+
+eval "$(/home/phong/miniconda3/bin/conda shell.YOUR_SHELL_NAME hook)" 
+
+To install conda's shell functions for easier access, first activate, then:
+
+conda init
+
+Thank you for installing Miniconda3!
+phong@phong:~$ conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main
+conda: command not found
+phong@phong:~$ conda --version
+conda: command not found
+phong@phong:~$ ls /root/
+ls: cannot open directory '/root/': Permission denied
+phong@phong:~$ ls ~
+api-interface1  Miniconda3-latest-Linux-x86_64.sh    Video-render-order-theta
+miniconda3      Miniconda3-latest-Linux-x86_64.sh.1
+phong@phong:~$ ls miniconda3/
+bin              condabin    include      man    ssl
+cmake            conda-meta  lib          pkgs   uninstall.sh
+compiler_compat  envs        libexec      share  x86_64-conda_cos7-linux-gnu
+_conda           etc         LICENSE.txt  shell  x86_64-conda-linux-gnu
+phong@phong:~$ export PATH="~/miniconda3/bin:$PATH"
+phong@phong:~$ conda --version
+conda 25.7.0
+phong@phong:~$ conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main
+accepted Terms of Service for https://repo.anaconda.com/pkgs/main
+phong@phong:~$ conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r
+accepted Terms of Service for https://repo.anaconda.com/pkgs/r
+phong@phong:~$ conda create -n apitest python=3.11 -y
+2 channel Terms of Service accepted
+Retrieving notices: done
+Channels:
+ - defaults
+Platform: linux-64
+Collecting package metadata (repodata.json): done
+Solving environment: done
+
+## Package Plan ##
+
+  environment location: /home/phong/miniconda3/envs/apitest
+
+  added / updated specs:
+    - python=3.11
+
+
+The following packages will be downloaded:
+
+    package                    |            build
+    ---------------------------|-----------------
+    pip-25.2                   |     pyhc872135_0         1.2 MB
+    python-3.11.13             |       h1a3bd86_0        32.6 MB
+    setuptools-78.1.1          |  py311h06a4308_0         2.3 MB
+    wheel-0.45.1               |  py311h06a4308_0         151 KB
+    ------------------------------------------------------------
+                                           Total:        36.2 MB
+
+The following NEW packages will be INSTALLED:
+
+  _libgcc_mutex      pkgs/main/linux-64::_libgcc_mutex-0.1-main 
+  _openmp_mutex      pkgs/main/linux-64::_openmp_mutex-5.1-1_gnu 
+  bzip2              pkgs/main/linux-64::bzip2-1.0.8-h5eee18b_6 
+  ca-certificates    pkgs/main/linux-64::ca-certificates-2025.7.15-h06a4308_0 
+  expat              pkgs/main/linux-64::expat-2.7.1-h6a678d5_0 
+  ld_impl_linux-64   pkgs/main/linux-64::ld_impl_linux-64-2.40-h12ee557_0 
+  libffi             pkgs/main/linux-64::libffi-3.4.4-h6a678d5_1 
+  libgcc-ng          pkgs/main/linux-64::libgcc-ng-11.2.0-h1234567_1 
+  libgomp            pkgs/main/linux-64::libgomp-11.2.0-h1234567_1 
+  libstdcxx-ng       pkgs/main/linux-64::libstdcxx-ng-11.2.0-h1234567_1 
+  libuuid            pkgs/main/linux-64::libuuid-1.41.5-h5eee18b_0 
+  libxcb             pkgs/main/linux-64::libxcb-1.17.0-h9b100fa_0 
+  ncurses            pkgs/main/linux-64::ncurses-6.5-h7934f7d_0 
+  openssl            pkgs/main/linux-64::openssl-3.0.17-h5eee18b_0 
+  pip                pkgs/main/noarch::pip-25.2-pyhc872135_0 
+  pthread-stubs      pkgs/main/linux-64::pthread-stubs-0.3-h0ce48e5_1 
+  python             pkgs/main/linux-64::python-3.11.13-h1a3bd86_0 
+  readline           pkgs/main/linux-64::readline-8.3-hc2a1206_0 
+  setuptools         pkgs/main/linux-64::setuptools-78.1.1-py311h06a4308_0 
+  sqlite             pkgs/main/linux-64::sqlite-3.50.2-hb25bd0a_1 
+  tk                 pkgs/main/linux-64::tk-8.6.15-h54e0aa7_0 
+  tzdata             pkgs/main/noarch::tzdata-2025b-h04d1e81_0 
+  wheel              pkgs/main/linux-64::wheel-0.45.1-py311h06a4308_0 
+  xorg-libx11        pkgs/main/linux-64::xorg-libx11-1.8.12-h9b100fa_1 
+  xorg-libxau        pkgs/main/linux-64::xorg-libxau-1.0.12-h9b100fa_0 
+  xorg-libxdmcp      pkgs/main/linux-64::xorg-libxdmcp-1.1.5-h9b100fa_0 
+  xorg-xorgproto     pkgs/main/linux-64::xorg-xorgproto-2024.1-h5eee18b_1 
+  xz                 pkgs/main/linux-64::xz-5.6.4-h5eee18b_1 
+  zlib               pkgs/main/linux-64::zlib-1.2.13-h5eee18b_1 
+
+
+
+Downloading and Extracting Packages:
+                                                                                                
+Preparing transaction: done                                                                     
+Verifying transaction: done                                                                     
+Executing transaction: done                                                                     
+#
+# To activate this environment, use
+#
+#     $ conda activate apitest
+#
+# To deactivate an active environment, use
+#
+#     $ conda deactivate
+
+phong@phong:~$ conda activate apitest
+
+CondaError: Run 'conda init' before 'conda activate'
+
+phong@phong:~$ conda init
+no change     /home/phong/miniconda3/condabin/conda
+no change     /home/phong/miniconda3/bin/conda
+no change     /home/phong/miniconda3/bin/conda-env
+no change     /home/phong/miniconda3/bin/activate
+no change     /home/phong/miniconda3/bin/deactivate
+no change     /home/phong/miniconda3/etc/profile.d/conda.sh
+no change     /home/phong/miniconda3/etc/fish/conf.d/conda.fish
+no change     /home/phong/miniconda3/shell/condabin/Conda.psm1
+no change     /home/phong/miniconda3/shell/condabin/conda-hook.ps1
+no change     /home/phong/miniconda3/lib/python3.13/site-packages/xontrib/conda.xsh
+no change     /home/phong/miniconda3/etc/profile.d/conda.csh
+modified      /home/phong/.bashrc
+
+==> For changes to take effect, close and re-open your current shell. <==
+
+phong@phong:~$ conda activate apitest
+
+CondaError: Run 'conda init' before 'conda activate'
+
+phong@phong:~$ source ~/.bashrc
+(base) phong@phong:~$ conda activate apitest
+(apitest) phong@phong:~$ ls
+api-interface1  Miniconda3-latest-Linux-x86_64.sh    Video-render-order-theta
+miniconda3      Miniconda3-latest-Linux-x86_64.sh.1
+(apitest) phong@phong:~$ cd api-interface1/
+(apitest) phong@phong:~/api-interface1$ ls
+app                    README.md         runserver.bat          test-interface
+CreateBaseFormAPI.bat  requirements.txt  simple-interface.html
+(apitest) phong@phong:~/api-interface1$ nano runserver.bat 
+(apitest) phong@phong:~/api-interface1$ nano runserver
+(apitest) phong@phong:~/api-interface1$ nano runserver.sh
+(apitest) phong@phong:~/api-interface1$ bash runserver.sh 
+runserver.sh: line 1: @echo: command not found
+runserver.sh: line 2: REM: command not found
+runserver.sh: line 3: REM: command not found
+runserver.sh: line 4: REM: command not found
+runserver.sh: line 5: REM: command not found
+runserver.sh: line 7: SET: command not found
+runserver.sh: line 8: SET: command not found
+runserver.sh: line 9: SET: command not found
+runserver.sh: line 11: REM: command not found
+Kich hoạt virtual environment...
+runserver.sh: line 13: call: command not found
+runserver.sh: line 15: REM: command not found
+runserver.sh: line 16: call: command not found
+🚀 Khởi động Uvicorn tại http://localhost:%PORT% ...
+runserver.sh: line 18: start: command not found
+runserver.sh: line 20: REM: command not found
+runserver.sh: line 21: REM: command not found
+runserver.sh: line 24: REM: command not found
+timeout: invalid time interval ‘/t’
+Try 'timeout --help' for more information.
+runserver.sh: line 27: REM: command not found
+🌐 Đang mở ngrok tunnel...
+runserver.sh: line 29: pushd: D:ngrok: No such file or directory
+runserver.sh: line 30: start: command not found
+runserver.sh: line 31: popd: directory stack empty
+runserver.sh: line 33: REM: command not found
+runserver.sh: line 34: REM: command not found
+(apitest) phong@phong:~/api-interface1$ pip install -r requirements.txt 
+Collecting annotated-types==0.7.0 (from -r requirements.txt (line 1))
+  Downloading annotated_types-0.7.0-py3-none-any.whl.metadata (15 kB)
+Collecting anyio==4.9.0 (from -r requirements.txt (line 2))
+  Downloading anyio-4.9.0-py3-none-any.whl.metadata (4.7 kB)
+Collecting cachetools==5.5.2 (from -r requirements.txt (line 3))
+  Downloading cachetools-5.5.2-py3-none-any.whl.metadata (5.4 kB)
+Collecting certifi==2025.6.15 (from -r requirements.txt (line 4))
+  Downloading certifi-2025.6.15-py3-none-any.whl.metadata (2.4 kB)
+Collecting charset-normalizer==3.4.2 (from -r requirements.txt (line 5))
+  Downloading charset_normalizer-3.4.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (35 kB)
+Collecting click==8.2.1 (from -r requirements.txt (line 6))
+  Downloading click-8.2.1-py3-none-any.whl.metadata (2.5 kB)
+Collecting colorama==0.4.6 (from -r requirements.txt (line 7))
+  Downloading colorama-0.4.6-py2.py3-none-any.whl.metadata (17 kB)
+Collecting elevenlabs==2.5.0 (from -r requirements.txt (line 8))
+  Downloading elevenlabs-2.5.0-py3-none-any.whl.metadata (6.3 kB)
+Collecting fastapi==0.115.14 (from -r requirements.txt (line 9))
+  Downloading fastapi-0.115.14-py3-none-any.whl.metadata (27 kB)
+Collecting ffmpeg==1.4 (from -r requirements.txt (line 10))
+  Downloading ffmpeg-1.4.tar.gz (5.1 kB)
+  Preparing metadata (setup.py) ... done
+Collecting ffmpeg-python==0.2.0 (from -r requirements.txt (line 11))
+  Downloading ffmpeg_python-0.2.0-py3-none-any.whl.metadata (1.7 kB)
+Collecting future==1.0.0 (from -r requirements.txt (line 12))
+  Downloading future-1.0.0-py3-none-any.whl.metadata (4.0 kB)
+Collecting google-ai-generativelanguage==0.6.15 (from -r requirements.txt (line 13))
+  Downloading google_ai_generativelanguage-0.6.15-py3-none-any.whl.metadata (5.7 kB)
+Collecting google-api-core==2.25.1 (from -r requirements.txt (line 14))
+  Downloading google_api_core-2.25.1-py3-none-any.whl.metadata (3.0 kB)
+Collecting google-api-python-client==2.174.0 (from -r requirements.txt (line 15))
+  Downloading google_api_python_client-2.174.0-py3-none-any.whl.metadata (7.0 kB)
+Collecting google-auth==2.40.3 (from -r requirements.txt (line 16))
+  Downloading google_auth-2.40.3-py2.py3-none-any.whl.metadata (6.2 kB)
+Collecting google-auth-httplib2==0.2.0 (from -r requirements.txt (line 17))
+  Downloading google_auth_httplib2-0.2.0-py2.py3-none-any.whl.metadata (2.2 kB)
+Collecting google-cloud-texttospeech==2.27.0 (from -r requirements.txt (line 18))
+  Downloading google_cloud_texttospeech-2.27.0-py3-none-any.whl.metadata (9.6 kB)
+Collecting google-genai==1.24.0 (from -r requirements.txt (line 19))
+  Downloading google_genai-1.24.0-py3-none-any.whl.metadata (40 kB)
+Collecting google-generativeai==0.8.5 (from -r requirements.txt (line 20))
+  Downloading google_generativeai-0.8.5-py3-none-any.whl.metadata (3.9 kB)
+Collecting googleapis-common-protos==1.70.0 (from -r requirements.txt (line 21))
+  Downloading googleapis_common_protos-1.70.0-py3-none-any.whl.metadata (9.3 kB)
+Collecting grpcio==1.73.1 (from -r requirements.txt (line 22))
+  Downloading grpcio-1.73.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (3.8 kB)
+Collecting grpcio-status==1.71.2 (from -r requirements.txt (line 23))
+  Downloading grpcio_status-1.71.2-py3-none-any.whl.metadata (1.1 kB)
+Collecting h11==0.16.0 (from -r requirements.txt (line 24))
+  Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+Collecting httpcore==1.0.9 (from -r requirements.txt (line 25))
+  Downloading httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+Collecting httplib2==0.22.0 (from -r requirements.txt (line 26))
+  Downloading httplib2-0.22.0-py3-none-any.whl.metadata (2.6 kB)
+Collecting httpx==0.28.1 (from -r requirements.txt (line 27))
+  Downloading httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+Collecting idna==3.10 (from -r requirements.txt (line 28))
+  Downloading idna-3.10-py3-none-any.whl.metadata (10 kB)
+Collecting mutagen==1.47.0 (from -r requirements.txt (line 29))
+  Downloading mutagen-1.47.0-py3-none-any.whl.metadata (1.7 kB)
+Collecting natsort==8.4.0 (from -r requirements.txt (line 30))
+  Downloading natsort-8.4.0-py3-none-any.whl.metadata (21 kB)
+Collecting pillow==11.3.0 (from -r requirements.txt (line 31))
+  Downloading pillow-11.3.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (9.0 kB)
+Collecting proto-plus==1.26.1 (from -r requirements.txt (line 32))
+  Downloading proto_plus-1.26.1-py3-none-any.whl.metadata (2.2 kB)
+Collecting protobuf==5.29.5 (from -r requirements.txt (line 33))
+  Downloading protobuf-5.29.5-cp38-abi3-manylinux2014_x86_64.whl.metadata (592 bytes)
+Collecting pyasn1==0.6.1 (from -r requirements.txt (line 34))
+  Downloading pyasn1-0.6.1-py3-none-any.whl.metadata (8.4 kB)
+Collecting pyasn1_modules==0.4.2 (from -r requirements.txt (line 35))
+  Downloading pyasn1_modules-0.4.2-py3-none-any.whl.metadata (3.5 kB)
+Collecting pydantic==2.11.7 (from -r requirements.txt (line 36))
+  Downloading pydantic-2.11.7-py3-none-any.whl.metadata (67 kB)
+Collecting pydantic_core==2.33.2 (from -r requirements.txt (line 37))
+  Downloading pydantic_core-2.33.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.8 kB)
+Collecting pyparsing==3.2.3 (from -r requirements.txt (line 38))
+  Downloading pyparsing-3.2.3-py3-none-any.whl.metadata (5.0 kB)
+Collecting requests==2.32.4 (from -r requirements.txt (line 39))
+  Downloading requests-2.32.4-py3-none-any.whl.metadata (4.9 kB)
+Collecting rsa==4.9.1 (from -r requirements.txt (line 40))
+  Downloading rsa-4.9.1-py3-none-any.whl.metadata (5.6 kB)
+Collecting sniffio==1.3.1 (from -r requirements.txt (line 41))
+  Downloading sniffio-1.3.1-py3-none-any.whl.metadata (3.9 kB)
+Collecting starlette==0.46.2 (from -r requirements.txt (line 42))
+  Downloading starlette-0.46.2-py3-none-any.whl.metadata (6.2 kB)
+Collecting tenacity==8.5.0 (from -r requirements.txt (line 43))
+  Downloading tenacity-8.5.0-py3-none-any.whl.metadata (1.2 kB)
+Collecting tqdm==4.67.1 (from -r requirements.txt (line 44))
+  Downloading tqdm-4.67.1-py3-none-any.whl.metadata (57 kB)
+Collecting typing-inspection==0.4.1 (from -r requirements.txt (line 45))
+  Downloading typing_inspection-0.4.1-py3-none-any.whl.metadata (2.6 kB)
+Collecting typing_extensions==4.14.0 (from -r requirements.txt (line 46))
+  Downloading typing_extensions-4.14.0-py3-none-any.whl.metadata (3.0 kB)
+Collecting ua-parser==1.0.1 (from -r requirements.txt (line 47))
+  Downloading ua_parser-1.0.1-py3-none-any.whl.metadata (5.6 kB)
+Collecting ua-parser-builtins==0.18.0.post1 (from -r requirements.txt (line 48))
+  Downloading ua_parser_builtins-0.18.0.post1-py3-none-any.whl.metadata (1.4 kB)
+Collecting uritemplate==4.2.0 (from -r requirements.txt (line 49))
+  Downloading uritemplate-4.2.0-py3-none-any.whl.metadata (2.6 kB)
+Collecting urllib3==2.5.0 (from -r requirements.txt (line 50))
+  Downloading urllib3-2.5.0-py3-none-any.whl.metadata (6.5 kB)
+Collecting user-agents==2.2.0 (from -r requirements.txt (line 51))
+  Downloading user_agents-2.2.0-py3-none-any.whl.metadata (7.9 kB)
+Collecting uvicorn==0.34.3 (from -r requirements.txt (line 52))
+  Downloading uvicorn-0.34.3-py3-none-any.whl.metadata (6.5 kB)
+Collecting websockets==15.0.1 (from -r requirements.txt (line 53))
+  Downloading websockets-15.0.1-cp311-cp311-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.8 kB)
+Collecting yt-dlp==2025.6.25 (from -r requirements.txt (line 54))
+  Downloading yt_dlp-2025.6.25-py3-none-any.whl.metadata (174 kB)
+Downloading annotated_types-0.7.0-py3-none-any.whl (13 kB)
+Downloading anyio-4.9.0-py3-none-any.whl (100 kB)
+Downloading cachetools-5.5.2-py3-none-any.whl (10 kB)
+Downloading certifi-2025.6.15-py3-none-any.whl (157 kB)
+Downloading charset_normalizer-3.4.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (147 kB)
+Downloading click-8.2.1-py3-none-any.whl (102 kB)
+Downloading colorama-0.4.6-py2.py3-none-any.whl (25 kB)
+Downloading elevenlabs-2.5.0-py3-none-any.whl (754 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 754.8/754.8 kB 1.8 MB/s  0:00:00
+Downloading pydantic_core-2.33.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.0/2.0 MB 3.9 MB/s  0:00:00
+Downloading fastapi-0.115.14-py3-none-any.whl (95 kB)
+Downloading pydantic-2.11.7-py3-none-any.whl (444 kB)
+Downloading starlette-0.46.2-py3-none-any.whl (72 kB)
+Downloading ffmpeg_python-0.2.0-py3-none-any.whl (25 kB)
+Downloading future-1.0.0-py3-none-any.whl (491 kB)
+Downloading google_ai_generativelanguage-0.6.15-py3-none-any.whl (1.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 1.4 MB/s  0:00:01
+Downloading google_api_core-2.25.1-py3-none-any.whl (160 kB)
+Downloading google_auth-2.40.3-py2.py3-none-any.whl (216 kB)
+Downloading googleapis_common_protos-1.70.0-py3-none-any.whl (294 kB)
+Downloading proto_plus-1.26.1-py3-none-any.whl (50 kB)
+Downloading protobuf-5.29.5-cp38-abi3-manylinux2014_x86_64.whl (319 kB)
+Downloading requests-2.32.4-py3-none-any.whl (64 kB)
+Downloading idna-3.10-py3-none-any.whl (70 kB)
+Downloading rsa-4.9.1-py3-none-any.whl (34 kB)
+Downloading urllib3-2.5.0-py3-none-any.whl (129 kB)
+Downloading google_api_python_client-2.174.0-py3-none-any.whl (13.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 13.7/13.7 MB 1.7 MB/s  0:00:08
+Downloading google_auth_httplib2-0.2.0-py2.py3-none-any.whl (9.3 kB)
+Downloading httplib2-0.22.0-py3-none-any.whl (96 kB)
+Downloading pyparsing-3.2.3-py3-none-any.whl (111 kB)
+Downloading uritemplate-4.2.0-py3-none-any.whl (11 kB)
+Downloading google_cloud_texttospeech-2.27.0-py3-none-any.whl (189 kB)
+Downloading google_genai-1.24.0-py3-none-any.whl (226 kB)
+Downloading httpx-0.28.1-py3-none-any.whl (73 kB)
+Downloading httpcore-1.0.9-py3-none-any.whl (78 kB)
+Downloading tenacity-8.5.0-py3-none-any.whl (28 kB)
+Downloading typing_extensions-4.14.0-py3-none-any.whl (43 kB)
+Downloading websockets-15.0.1-cp311-cp311-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (182 kB)
+Downloading google_generativeai-0.8.5-py3-none-any.whl (155 kB)
+Downloading grpcio-1.73.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (6.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.0/6.0 MB 1.7 MB/s  0:00:03
+Downloading grpcio_status-1.71.2-py3-none-any.whl (14 kB)
+Downloading h11-0.16.0-py3-none-any.whl (37 kB)
+Downloading mutagen-1.47.0-py3-none-any.whl (194 kB)
+Downloading natsort-8.4.0-py3-none-any.whl (38 kB)
+Downloading pillow-11.3.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (6.6 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.6/6.6 MB 2.4 MB/s  0:00:02
+Downloading pyasn1-0.6.1-py3-none-any.whl (83 kB)
+Downloading pyasn1_modules-0.4.2-py3-none-any.whl (181 kB)
+Downloading sniffio-1.3.1-py3-none-any.whl (10 kB)
+Downloading tqdm-4.67.1-py3-none-any.whl (78 kB)
+Downloading typing_inspection-0.4.1-py3-none-any.whl (14 kB)
+Downloading ua_parser-1.0.1-py3-none-any.whl (31 kB)
+Downloading ua_parser_builtins-0.18.0.post1-py3-none-any.whl (86 kB)
+Downloading user_agents-2.2.0-py3-none-any.whl (9.6 kB)
+Downloading uvicorn-0.34.3-py3-none-any.whl (62 kB)
+Downloading yt_dlp-2025.6.25-py3-none-any.whl (3.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.3/3.3 MB 1.5 MB/s  0:00:02
+Building wheels for collected packages: ffmpeg
+  DEPRECATION: Building 'ffmpeg' using the legacy setup.py bdist_wheel mechanism, which will be removed in a future version. pip 25.3 will enforce this behaviour change. A possible replacement is to use the standardized build interface by setting the `--use-pep517` option, (possibly combined with `--no-build-isolation`), or adding a `pyproject.toml` file to the source tree of 'ffmpeg'. Discussion can be found at https://github.com/pypa/pip/issues/6334
+  Building wheel for ffmpeg (setup.py) ... done
+  Created wheel for ffmpeg: filename=ffmpeg-1.4-py3-none-any.whl size=6126 sha256=3b498dbf25c0bdd1dbb56a95deff3703f750f5bb790f80dc4b0380100da7ad55
+  Stored in directory: /home/phong/.cache/pip/wheels/56/30/c5/576bdd729f3bc062d62a551be7fefd6ed2f761901568171e4e
+Successfully built ffmpeg
+Installing collected packages: ffmpeg, yt-dlp, websockets, urllib3, uritemplate, ua-parser-builtins, typing_extensions, tqdm, tenacity, sniffio, pyparsing, pyasn1, protobuf, pillow, natsort, mutagen, idna, h11, grpcio, future, colorama, click, charset-normalizer, certifi, cachetools, annotated-types, uvicorn, ua-parser, typing-inspection, rsa, requests, pydantic_core, pyasn1_modules, proto-plus, httplib2, httpcore, googleapis-common-protos, ffmpeg-python, anyio, user-agents, starlette, pydantic, httpx, grpcio-status, google-auth, google-genai, google-auth-httplib2, google-api-core, fastapi, elevenlabs, google-api-python-client, google-cloud-texttospeech, google-ai-generativelanguage, google-generativeai
+Successfully installed annotated-types-0.7.0 anyio-4.9.0 cachetools-5.5.2 certifi-2025.6.15 charset-normalizer-3.4.2 click-8.2.1 colorama-0.4.6 elevenlabs-2.5.0 fastapi-0.115.14 ffmpeg-1.4 ffmpeg-python-0.2.0 future-1.0.0 google-ai-generativelanguage-0.6.15 google-api-core-2.25.1 google-api-python-client-2.174.0 google-auth-2.40.3 google-auth-httplib2-0.2.0 google-cloud-texttospeech-2.27.0 google-genai-1.24.0 google-generativeai-0.8.5 googleapis-common-protos-1.70.0 grpcio-1.73.1 grpcio-status-1.71.2 h11-0.16.0 httpcore-1.0.9 httplib2-0.22.0 httpx-0.28.1 idna-3.10 mutagen-1.47.0 natsort-8.4.0 pillow-11.3.0 proto-plus-1.26.1 protobuf-5.29.5 pyasn1-0.6.1 pyasn1_modules-0.4.2 pydantic-2.11.7 pydantic_core-2.33.2 pyparsing-3.2.3 requests-2.32.4 rsa-4.9.1 sniffio-1.3.1 starlette-0.46.2 tenacity-8.5.0 tqdm-4.67.1 typing-inspection-0.4.1 typing_extensions-4.14.0 ua-parser-1.0.1 ua-parser-builtins-0.18.0.post1 uritemplate-4.2.0 urllib3-2.5.0 user-agents-2.2.0 uvicorn-0.34.3 websockets-15.0.1 yt-dlp-2025.6.25
+(apitest) phong@phong:~/api-interface1$ uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+INFO:     Will watch for changes in these directories: ['/home/phong/api-interface1']
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [3147] using StatReload
+ERROR:    Error loading ASGI app. Could not import module "main".
+^CINFO:     Stopping reloader process [3147]
+(apitest) phong@phong:~/api-interface1$ 
+(apitest) phong@phong:~/api-interface1$ cd app/
+(apitest) phong@phong:~/api-interface1/app$ uvicorn main:app --host 0.0.0.0 --port 8000 --reloadINFO:     Will watch for changes in these directories: ['/home/phong/api-interface1/app']
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [3152] using StatReload
+INFO:     Started server process [3154]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+2025-09-09 10:30:10,084 - INFO - Request: GET http://192.168.170.129:8000/
+2025-09-09 10:30:10,088 - INFO - Response status: 200
+INFO:     192.168.170.1:50955 - "GET / HTTP/1.1" 200 OK
+2025-09-09 10:30:10,158 - INFO - Request: GET http://192.168.170.129:8000/favicon.ico
+2025-09-09 10:30:10,158 - INFO - Response status: 404
+INFO:     192.168.170.1:50955 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+^A
