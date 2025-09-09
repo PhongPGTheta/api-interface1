@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Render Order Theta API - Test Interface</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .config-section {
+            padding: 30px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .config-section h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #34495e;
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+        }
+
+        .response-section {
+            padding: 30px;
+        }
+
+        .response-section h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .response-box {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .status-success {
+            background-color: #27ae60;
+        }
+
+        .status-error {
+            background-color: #e74c3c;
+        }
+
+        .status-processing {
+            background-color: #f39c12;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid #eee;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            padding: 15px 25px;
+            background: #f8f9fa;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            background: white;
+            color: #2c3e50;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .api-endpoint {
+            background: #e8f4f8;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .api-endpoint h4 {
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .api-endpoint code {
+            background: #f1f3f4;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎬 Video Render Order Theta API</h1>
+            <p>Test Interface - Tạo video tự động từ YouTube</p>
+        </div>
+
+        <div class="config-section">
+            <h2>⚙️ Cấu hình API</h2>
+            <div class="form-group">
+                <label for="apiBaseUrl">API Base URL:</label>
+                <input type="text" id="apiBaseUrl" value="http://localhost:8000" placeholder="http://your-server:8000">
+            </div>
+            <div class="form-group">
+                <label for="userAgent">User Agent:</label>
+                <input type="text" id="userAgent" value="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36">
+            </div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('create')">📝 Tạo Script</button>
+            <button class="tab" onclick="showTab('audio')">🎵 Tạo Audio</button>
+            <button class="tab" onclick="showTab('image')">🖼️ Tạo Hình Ảnh</button>
+            <button class="tab" onclick="showTab('video')">🎬 Render Video</button>
+            <button class="tab" onclick="showTab('status')">📊 Kiểm tra Status</button>
+        </div>
+
+        <!-- Tab 1: Create Script -->
+        <div id="create" class="tab-content active">
+            <div class="config-section">
+                <h2>📝 Tạo Script từ YouTube Video</h2>
+                <div class="form-group">
+                    <label for="youtubeUrl">YouTube URL:</label>
+                    <input type="text" id="youtubeUrl" placeholder="https://www.youtube.com/watch?v=VIDEO_ID">
+                </div>
+                <div class="form-group">
+                    <label for="orderContent">Nội dung yêu cầu:</label>
+                    <textarea id="orderContent" placeholder="Tạo nội dung về AI và machine learning..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="contentLength">Độ dài nội dung (từ):</label>
+                    <input type="number" id="contentLength" value="6000" min="1000" max="10000">
+                </div>
+                <button class="btn" onclick="createScript()">🚀 Tạo Script</button>
+                <button class="btn btn-warning" onclick="checkScriptStatus()">📊 Kiểm tra Status</button>
+            </div>
+        </div>
+
+        <!-- Tab 2: Create Audio -->
+        <div id="audio" class="tab-content">
+            <div class="config-section">
+                <h2>🎵 Tạo Audio từ Script</h2>
+                <div class="form-group">
+                    <label for="scriptUuid">Script UUID:</label>
+                    <input type="text" id="scriptUuid" placeholder="UUID từ bước tạo script">
+                </div>
+                <div class="form-group">
+                    <label for="videoId">Video ID:</label>
+                    <input type="number" id="videoId" placeholder="123">
+                </div>
+                <button class="btn" onclick="createAudio()">🎵 Tạo Audio</button>
+                <button class="btn btn-warning" onclick="checkAudioStatus()">📊 Kiểm tra Status</button>
+            </div>
+        </div>
+
+        <!-- Tab 3: Create Images -->
+        <div id="image" class="tab-content">
+            <div class="config-section">
+                <h2>🖼️ Tạo Hình Ảnh từ Script</h2>
+                <div class="form-group">
+                    <label for="imageUuid">Script UUID:</label>
+                    <input type="text" id="imageUuid" placeholder="UUID từ bước tạo script">
+                </div>
+                <div class="form-group">
+                    <label for="imageVideoId">Video ID:</label>
+                    <input type="number" id="imageVideoId" placeholder="123">
+                </div>
+                <button class="btn" onclick="createImages()">🖼️ Tạo Hình Ảnh</button>
+                <button class="btn btn-warning" onclick="checkImageStatus()">📊 Kiểm tra Status</button>
+            </div>
+        </div>
+
+        <!-- Tab 4: Render Video -->
+        <div id="video" class="tab-content">
+            <div class="config-section">
+                <h2>🎬 Render Video Cuối Cùng</h2>
+                <div class="form-group">
+                    <label for="videoUuid">Script UUID:</label>
+                    <input type="text" id="videoUuid" placeholder="UUID từ bước tạo script">
+                </div>
+                <div class="form-group">
+                    <label for="renderVideoId">Video ID:</label>
+                    <input type="number" id="renderVideoId" placeholder="123">
+                </div>
+                <button class="btn" onclick="renderVideo()">🎬 Render Video</button>
+                <button class="btn btn-warning" onclick="checkVideoStatus()">📊 Kiểm tra Status</button>
+            </div>
+        </div>
+
+        <!-- Tab 5: Status Check -->
+        <div id="status" class="tab-content">
+            <div class="config-section">
+                <h2>📊 Kiểm tra Status Tổng Quan</h2>
+                <div class="form-group">
+                    <label for="statusUuid">UUID để kiểm tra:</label>
+                    <input type="text" id="statusUuid" placeholder="Nhập UUID bất kỳ">
+                </div>
+                <div class="form-group">
+                    <label>Auto-poll:</label>
+                    <div>
+                        <input type="checkbox" id="autoPollToggle" onchange="toggleAutoPoll()"> Tự động kiểm tra mỗi
+                        <input type="number" id="autoPollInterval" value="10" min="3" max="60" style="width:80px"> giây
+                    </div>
+                </div>
+                <button id="btnCheckAll" class="btn" onclick="checkAllStatus()">🔍 Kiểm tra Tất cả</button>
+                <button id="btnHealth" class="btn btn-success" onclick="testApiHealth()">❤️ Test API Health</button>
+            </div>
+        </div>
+
+        <div class="response-section">
+            <h2>📋 Kết quả</h2>
+            <div id="responseBox" class="response-box">Chờ thực hiện thao tác...</div>
+            <div class="progress-bar">
+                <div id="progressFill" class="progress-fill"></div>
+            </div>
+        </div>
+
+        <div class="config-section">
+            <h2>🔗 API Endpoints</h2>
+            <div class="api-endpoint">
+                <h4>📝 Tạo Script</h4>
+                <code>POST /api/v1/tasks/create</code>
+            </div>
+            <div class="api-endpoint">
+                <h4>🎵 Tạo Audio</h4>
+                <code>POST /api/v1/tasks/audio</code>
+            </div>
+            <div class="api-endpoint">
+                <h4>🖼️ Tạo Hình Ảnh</h4>
+                <code>POST /api/v1/tasks/imagen</code>
+            </div>
+            <div class="api-endpoint">
+                <h4>🎬 Render Video</h4>
+                <code>POST /api/v1/tasks/video</code>
+            </div>
+            <div class="api-endpoint">
+                <h4>📊 Kiểm tra Status</h4>
+                <code>GET /api/v1/tasks/{type}/get?uuid={uuid}</code>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentUuid = null;
+        let currentVideoId = null;
+
+        function showTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        function updateResponse(message, type = 'info') {
+            const responseBox = document.getElementById('responseBox');
+            const timestamp = new Date().toLocaleString();
+            const statusIcon = type === 'success' ? '✅' : type === 'error' ? '❌' : type === 'processing' ? '⏳' : 'ℹ️';
+            
+            responseBox.textContent = `[${timestamp}] ${statusIcon} ${message}`;
+        }
+
+        function updateProgress(percent) {
+            document.getElementById('progressFill').style.width = percent + '%';
+        }
+
+        async function makeApiCall(endpoint, method = 'GET', data = null) {
+            const baseUrl = document.getElementById('apiBaseUrl').value;
+            const userAgent = document.getElementById('userAgent').value;
+            if (!baseUrl) {
+                updateResponse('API Base URL trống. Hãy nhập ví dụ: http://localhost:8000', 'error');
+                return { success: false, error: { message: 'Missing base URL' } };
+            }
+            
+            const options = {
+                method: method,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'User-Agent': userAgent
+                }
+            };
+
+            if (data) {
+                options.body = JSON.stringify(data);
+            }
+
+            try {
+                const response = await fetch(`${baseUrl}${endpoint}`, options);
+                const result = await response.json();
+                
+                if (response.ok) {
+                    return { success: true, data: result };
+                } else {
+                    return { success: false, error: result };
+                }
+            } catch (error) {
+                return { success: false, error: { message: error.message } };
+            }
+        }
+
+        function setLoading(buttonId, loading) {
+            const btn = document.getElementById(buttonId);
+            if (!btn) return;
+            btn.disabled = !!loading;
+        }
+
+        function getActiveUuid() {
+            const s1 = (document.getElementById('scriptUuid') || {}).value;
+            const s2 = (document.getElementById('statusUuid') || {}).value;
+            try {
+                const saved = localStorage.getItem('currentUuid');
+                if (saved) return saved;
+            } catch (e) {}
+            return currentUuid || s1 || s2 || '';
+        }
+
+        async function createScript() {
+            updateResponse('Đang tạo script...', 'processing');
+            updateProgress(10);
+            setLoading('btnCreateScript', true);
+
+            const youtubeUrl = document.getElementById('youtubeUrl').value;
+            const orderContent = document.getElementById('orderContent').value;
+            const contentLength = document.getElementById('contentLength').value;
+
+            if (!youtubeUrl || !orderContent) {
+                updateResponse('Vui lòng nhập đầy đủ YouTube URL và nội dung yêu cầu!', 'error');
+                updateProgress(0);
+                setLoading('btnCreateScript', false);
+                return;
+            }
+
+            const data = {
+                url: youtubeUrl,
+                platform: "youtube",
+                order: orderContent,
+                task: "Gemini",
+                length: parseInt(contentLength)
+            };
+
+            updateProgress(30);
+            const result = await makeApiCall('/api/v1/tasks/create', 'POST', data);
+
+            if (result.success) {
+                currentUuid = result.data.uuid;
+                try { localStorage.setItem('currentUuid', currentUuid); } catch (e) {}
+                currentVideoId = Math.floor(Math.random() * 1000); // Generate random ID for demo
+                
+                updateResponse(`✅ Script đã được tạo thành công!\nUUID: ${currentUuid}\nStatus: ${result.data.status}`, 'success');
+                updateProgress(100);
+                
+                // Auto-fill other forms
+                document.getElementById('scriptUuid').value = currentUuid;
+                document.getElementById('imageUuid').value = currentUuid;
+                document.getElementById('videoUuid').value = currentUuid;
+                document.getElementById('videoId').value = currentVideoId;
+                document.getElementById('imageVideoId').value = currentVideoId;
+                document.getElementById('renderVideoId').value = currentVideoId;
+
+                // Start a short auto-poll for script readiness
+                startAutoPollOnce('script');
+            } else {
+                updateResponse(`❌ Lỗi tạo script: ${result.error.message || 'Unknown error'}`, 'error');
+                updateProgress(0);
+            }
+            setLoading('btnCreateScript', false);
+        }
+
+        async function createAudio() {
+            updateResponse('Đang tạo audio...', 'processing');
+            updateProgress(10);
+
+            const uuid = document.getElementById('scriptUuid').value;
+            const videoId = document.getElementById('videoId').value;
+
+            if (!uuid) {
+                updateResponse('Vui lòng nhập UUID từ bước tạo script!', 'error');
+                updateProgress(0);
+                return;
+            }
+
+            const data = {
+                uuid: uuid,
+                id: parseInt(videoId) || currentVideoId,
+                use_script: true
+            };
+
+            updateProgress(30);
+            const result = await makeApiCall('/api/v1/tasks/audio', 'POST', data);
+
+            if (result.success) {
+                updateResponse(`✅ Audio đã được tạo thành công!\nUUID: ${result.data.uuid}\nStatus: ${result.data.status}`, 'success');
+                updateProgress(100);
+            } else {
+                updateResponse(`❌ Lỗi tạo audio: ${result.error.message || 'Unknown error'}`, 'error');
+                updateProgress(0);
+            }
+        }
+
+        async function createImages() {
+            updateResponse('Đang tạo hình ảnh...', 'processing');
+            updateProgress(10);
+
+            const uuid = document.getElementById('imageUuid').value;
+            const videoId = document.getElementById('imageVideoId').value;
+
+            if (!uuid) {
+                updateResponse('Vui lòng nhập UUID từ bước tạo script!', 'error');
+                updateProgress(0);
+                return;
+            }
+
+            const data = {
+                uuid: uuid,
+                id: parseInt(videoId) || currentVideoId,
+                use_script: true
+            };
+
+            updateProgress(30);
+            const result = await makeApiCall('/api/v1/tasks/imagen', 'POST', data);
+
+            if (result.success) {
+                updateResponse(`✅ Hình ảnh đã được tạo thành công!\nUUID: ${result.data.uuid}\nStatus: ${result.data.status}`, 'success');
+                updateProgress(100);
+            } else {
+                updateResponse(`❌ Lỗi tạo hình ảnh: ${result.error.message || 'Unknown error'}`, 'error');
+                updateProgress(0);
+            }
+        }
+
+        async function renderVideo() {
+            updateResponse('Đang render video...', 'processing');
+            updateProgress(10);
+
+            const uuid = document.getElementById('videoUuid').value;
+            const videoId = document.getElementById('renderVideoId').value;
+
+            if (!uuid) {
+                updateResponse('Vui lòng nhập UUID từ bước tạo script!', 'error');
+                updateProgress(0);
+                return;
+            }
+
+            const data = {
+                uuid: uuid,
+                id: parseInt(videoId) || currentVideoId
+            };
+
+            updateProgress(30);
+            const result = await makeApiCall('/api/v1/tasks/video', 'POST', data);
+
+            if (result.success) {
+                updateResponse(`✅ Video đã được render thành công!\nUUID: ${result.data.uuid}\nStatus: ${result.data.status}`, 'success');
+                updateProgress(100);
+            } else {
+                updateResponse(`❌ Lỗi render video: ${result.error.message || 'Unknown error'}`, 'error');
+                updateProgress(0);
+            }
+        }
+
+        async function checkScriptStatus() {
+            // Try currentUuid first, then fall back to Script UUID input or Status UUID input
+            const uuid = getActiveUuid();
+
+            if (!uuid) {
+                updateResponse('Chưa có UUID để kiểm tra. Vui lòng tạo script hoặc nhập UUID vào ô Script UUID/Status UUID!', 'error');
+                return;
+            }
+
+            updateResponse('Đang kiểm tra status script...', 'processing');
+            const result = await makeApiCall(`/api/v1/tasks/create/get?uuid=${uuid}`);
+
+            if (result.success) {
+                if (result.data && result.data.error) {
+                    updateResponse(`📊 Status Script:\nUUID: ${uuid}\nStatus: processing... (server báo: ${result.data.error}). Vui lòng đợi thêm rồi thử lại.`, 'info');
+                } else {
+                    updateResponse(`📊 Status Script:\nUUID: ${result.data?.uuid || uuid}\nStatus: ${result.data?.status || 'processing'}\nContent: ${result.data?.content_order ? 'Đã có' : 'Chưa có'}`, 'success');
+                }
+            } else {
+                updateResponse(`❌ Lỗi kiểm tra status: ${result.error.message || 'Unknown error'}`, 'error');
+            }
+        }
+
+        let autoPollTimer = null;
+        function toggleAutoPoll() {
+            const enabled = document.getElementById('autoPollToggle').checked;
+            if (enabled) {
+                const sec = Math.max(3, Math.min(60, parseInt(document.getElementById('autoPollInterval').value || '10')));
+                autoPollTimer && clearInterval(autoPollTimer);
+                autoPollTimer = setInterval(checkAllStatus, sec * 1000);
+                checkAllStatus();
+            } else {
+                autoPollTimer && clearInterval(autoPollTimer);
+                autoPollTimer = null;
+            }
+        }
+
+        async function startAutoPollOnce(kind) {
+            // Poll script status a few times quickly to populate DB
+            let attempts = 0;
+            const maxAttempts = 6; // ~60s if 10s interval
+            const loop = async () => {
+                attempts += 1;
+                await checkScriptStatus();
+                if (attempts < maxAttempts) setTimeout(loop, 10000);
+            };
+            setTimeout(loop, 5000);
+        }
+
+        async function checkAudioStatus() {
+            const uuid = document.getElementById('scriptUuid').value;
+            if (!uuid) {
+                updateResponse('Vui lòng nhập UUID!', 'error');
+                return;
+            }
+
+            updateResponse('Đang kiểm tra status audio...', 'processing');
+            const result = await makeApiCall(`/api/v1/tasks/audio/get?uuid=${uuid}`);
+
+            if (result.success) {
+                updateResponse(`📊 Status Audio:\nUUID: ${result.data.uuid}\nStatus: ${result.data.status}\nAudio Path: ${result.data.audio_path || 'Chưa có'}`, 'success');
+            } else {
+                updateResponse(`❌ Lỗi kiểm tra status: ${result.error.message || 'Unknown error'}`, 'error');
+            }
+        }
+
+        async function checkImageStatus() {
+            const uuid = document.getElementById('imageUuid').value;
+            if (!uuid) {
+                updateResponse('Vui lòng nhập UUID!', 'error');
+                return;
+            }
+
+            updateResponse('Đang kiểm tra status hình ảnh...', 'processing');
+            const result = await makeApiCall(`/api/v1/tasks/imagen/get?uuid=${uuid}`);
+
+            if (result.success) {
+                updateResponse(`📊 Status Hình Ảnh:\nUUID: ${result.data.uuid}\nStatus: ${result.data.status}\nImages: ${result.data.images_path ? 'Đã có' : 'Chưa có'}`, 'success');
+            } else {
+                updateResponse(`❌ Lỗi kiểm tra status: ${result.error.message || 'Unknown error'}`, 'error');
+            }
+        }
+
+        async function checkVideoStatus() {
+            const uuid = document.getElementById('videoUuid').value;
+            if (!uuid) {
+                updateResponse('Vui lòng nhập UUID!', 'error');
+                return;
+            }
+
+            updateResponse('Đang kiểm tra status video...', 'processing');
+            const result = await makeApiCall(`/api/v1/tasks/video/get?uuid=${uuid}`);
+
+            if (result.success) {
+                updateResponse(`📊 Status Video:\nUUID: ${result.data.uuid}\nStatus: ${result.data.status}\nVideo Path: ${result.data.video_path || 'Chưa có'}`, 'success');
+            } else {
+                updateResponse(`❌ Lỗi kiểm tra status: ${result.error.message || 'Unknown error'}`, 'error');
+            }
+        }
+
+        async function checkAllStatus() {
+            const uuid = document.getElementById('statusUuid').value;
+            if (!uuid) {
+                updateResponse('Vui lòng nhập UUID!', 'error');
+                return;
+            }
+
+            updateResponse('Đang kiểm tra tất cả status...', 'processing');
+            
+            const endpoints = [
+                { name: 'Script', url: `/api/v1/tasks/create/get?uuid=${uuid}` },
+                { name: 'Audio', url: `/api/v1/tasks/audio/get?uuid=${uuid}` },
+                { name: 'Images', url: `/api/v1/tasks/imagen/get?uuid=${uuid}` },
+                { name: 'Video', url: `/api/v1/tasks/video/get?uuid=${uuid}` }
+            ];
+
+            let results = [];
+            for (const endpoint of endpoints) {
+                const result = await makeApiCall(endpoint.url);
+                results.push(`${endpoint.name}: ${result.success ? result.data.status : 'Not found'}`);
+            }
+
+            updateResponse(`📊 Tổng quan Status cho UUID: ${uuid}\n${results.join('\n')}`, 'success');
+        }
+
+        async function testApiHealth() {
+            updateResponse('Đang kiểm tra API health...', 'processing');
+            const result = await makeApiCall('/');
+
+            if (result.success) {
+                updateResponse(`✅ API đang hoạt động tốt!\nMessage: ${result.data.message}`, 'success');
+            } else {
+                updateResponse(`❌ API không hoạt động: ${result.error.message || 'Unknown error'}`, 'error');
+            }
+        }
+
+        // Auto-save configuration
+        function saveConfig() {
+            localStorage.setItem('apiBaseUrl', document.getElementById('apiBaseUrl').value);
+            localStorage.setItem('userAgent', document.getElementById('userAgent').value);
+        }
+
+        function loadConfig() {
+            const savedApiUrl = localStorage.getItem('apiBaseUrl');
+            const savedUserAgent = localStorage.getItem('userAgent');
+            
+            if (savedApiUrl) document.getElementById('apiBaseUrl').value = savedApiUrl;
+            if (savedUserAgent) document.getElementById('userAgent').value = savedUserAgent;
+        }
+
+        // Load saved configuration on page load
+        window.onload = function() {
+            loadConfig();
+            try { const savedUuid = localStorage.getItem('currentUuid'); if (savedUuid) { currentUuid = savedUuid; const el1 = document.getElementById('scriptUuid'); if (el1) el1.value = savedUuid; const el2 = document.getElementById('statusUuid'); if (el2) el2.value = savedUuid; } } catch (e) {}
+            
+            // Auto-save on change
+            document.getElementById('apiBaseUrl').addEventListener('change', saveConfig);
+            document.getElementById('userAgent').addEventListener('change', saveConfig);
+        };
+    </script>
+</body>
+</html>

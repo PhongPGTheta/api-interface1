@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Render Order Theta - Simple Interface</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            padding: 30px;
+        }
+
+        .step {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            background: #f9f9f9;
+        }
+
+        .step.active {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .step.completed {
+            border-color: #27ae60;
+            background: #e8f5e8;
+        }
+
+        .step h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #34495e;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+        }
+
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-weight: 600;
+        }
+
+        .status.processing {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        .status.completed {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .result {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid #667eea;
+        }
+
+        .result h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .result a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .result a:hover {
+            text-decoration: underline;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .uuid-display {
+            background: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+            word-break: break-all;
+            margin: 10px 0;
+        }
+
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            padding: 0 20px;
+        }
+
+        .step-indicator .step-dot {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #666;
+            position: relative;
+        }
+
+        .step-indicator .step-dot.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .step-indicator .step-dot.completed {
+            background: #27ae60;
+            color: white;
+        }
+
+        .step-indicator .step-dot:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 100%;
+            width: 100px;
+            height: 2px;
+            background: #e0e0e0;
+            transform: translateY(-50%);
+        }
+
+        .step-indicator .step-dot.completed:not(:last-child)::after {
+            background: #27ae60;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎬 Video Render Order Theta</h1>
+            <p>Giao diện đơn giản để tạo video từ YouTube</p>
+        </div>
+
+        <div class="main-content">
+            <!-- Step Indicator -->
+            <div class="step-indicator">
+                <div class="step-dot active" id="step1-dot">1</div>
+                <div class="step-dot" id="step2-dot">2</div>
+                <div class="step-dot" id="step3-dot">3</div>
+                <div class="step-dot" id="step4-dot">4</div>
+            </div>
+
+            <!-- Step 1: Create Order -->
+            <div class="step active" id="step1">
+                <h3>📝 Bước 1: Tạo Order từ YouTube</h3>
+                <div class="form-group">
+                    <label for="youtube-url">URL YouTube:</label>
+                    <input type="url" id="youtube-url" placeholder="https://www.youtube.com/watch?v=..." required>
+                </div>
+                <div class="form-group">
+                    <label for="order-content">Nội dung Order (tùy chọn):</label>
+                    <textarea id="order-content" placeholder="Mô tả nội dung bạn muốn tạo..."></textarea>
+                </div>
+                <button class="btn" onclick="createOrder()">Tạo Order</button>
+                <div id="order-status" class="hidden"></div>
+                <div id="order-result" class="hidden"></div>
+            </div>
+
+            <!-- Step 2: Generate Audio -->
+            <div class="step" id="step2">
+                <h3>🎵 Bước 2: Tạo Audio</h3>
+                <div class="form-group">
+                    <label for="audio-uuid">UUID từ bước 1:</label>
+                    <input type="text" id="audio-uuid" placeholder="UUID sẽ được điền tự động" readonly>
+                </div>
+                <button class="btn" onclick="generateAudio()" id="audio-btn" disabled>Tạo Audio</button>
+                <div id="audio-status" class="hidden"></div>
+                <div id="audio-result" class="hidden"></div>
+            </div>
+
+            <!-- Step 3: Generate Images -->
+            <div class="step" id="step3">
+                <h3>🖼️ Bước 3: Tạo Hình Ảnh</h3>
+                <div class="form-group">
+                    <label for="image-uuid">UUID từ bước 1:</label>
+                    <input type="text" id="image-uuid" placeholder="UUID sẽ được điền tự động" readonly>
+                </div>
+                <button class="btn" onclick="generateImages()" id="image-btn" disabled>Tạo Hình Ảnh</button>
+                <div id="image-status" class="hidden"></div>
+                <div id="image-result" class="hidden"></div>
+            </div>
+
+            <!-- Step 4: Render Video -->
+            <div class="step" id="step4">
+                <h3>🎬 Bước 4: Render Video</h3>
+                <div class="form-group">
+                    <label for="video-uuid">UUID từ bước 1:</label>
+                    <input type="text" id="video-uuid" placeholder="UUID sẽ được điền tự động" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="audio-url">URL Audio (từ bước 2):</label>
+                    <input type="url" id="audio-url" placeholder="URL audio sẽ được điền tự động" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="image-urls">URLs Hình Ảnh (từ bước 3):</label>
+                    <textarea id="image-urls" placeholder="URLs hình ảnh sẽ được điền tự động" readonly></textarea>
+                </div>
+                <button class="btn" onclick="renderVideo()" id="video-btn" disabled>Render Video</button>
+                <div id="video-status" class="hidden"></div>
+                <div id="video-result" class="hidden"></div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentUUID = null;
+        let audioURL = null;
+        let imageURLs = [];
+
+        // API Base URL
+        const API_BASE = window.location.origin + '/api/v1/tasks';
+
+        // Utility functions
+        function showStatus(elementId, message, type = 'processing') {
+            const element = document.getElementById(elementId);
+            element.className = `status ${type}`;
+            element.textContent = message;
+            element.classList.remove('hidden');
+        }
+
+        function showResult(elementId, content) {
+            const element = document.getElementById(elementId);
+            element.innerHTML = content;
+            element.classList.remove('hidden');
+        }
+
+        function updateProgress(step) {
+            const progress = (step / 4) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+        }
+
+        function updateStepIndicator(activeStep) {
+            for (let i = 1; i <= 4; i++) {
+                const dot = document.getElementById(`step${i}-dot`);
+                const step = document.getElementById(`step${i}`);
+                
+                if (i < activeStep) {
+                    dot.classList.add('completed');
+                    dot.classList.remove('active');
+                    step.classList.add('completed');
+                    step.classList.remove('active');
+                } else if (i === activeStep) {
+                    dot.classList.add('active');
+                    dot.classList.remove('completed');
+                    step.classList.add('active');
+                    step.classList.remove('completed');
+                } else {
+                    dot.classList.remove('active', 'completed');
+                    step.classList.remove('active', 'completed');
+                }
+            }
+        }
+
+        // Step 1: Create Order
+        async function createOrder() {
+            const url = document.getElementById('youtube-url').value;
+            const order = document.getElementById('order-content').value;
+
+            if (!url) {
+                alert('Vui lòng nhập URL YouTube');
+                return;
+            }
+
+            showStatus('order-status', 'Đang tạo order...', 'processing');
+            updateStepIndicator(1);
+
+            try {
+                const response = await fetch(`${API_BASE}/create`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'User-Agent': navigator.userAgent
+                    },
+                    body: JSON.stringify({
+                        url: url,
+                        order: order,
+                        platform: 'youtube',
+                        task: 'Gemini',
+                        length: 10000
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    currentUUID = data.uuid;
+                    document.getElementById('audio-uuid').value = currentUUID;
+                    document.getElementById('image-uuid').value = currentUUID;
+                    document.getElementById('video-uuid').value = currentUUID;
+
+                    showStatus('order-status', 'Order đã được tạo thành công!', 'completed');
+                    showResult('order-result', `
+                        <h4>✅ Order Created Successfully</h4>
+                        <div class="uuid-display">UUID: ${currentUUID}</div>
+                        <p>Bạn có thể tiếp tục với bước tiếp theo.</p>
+                    `);
+
+                    // Enable next step
+                    document.getElementById('audio-btn').disabled = false;
+                    updateProgress(1);
+                } else {
+                    throw new Error(data.error || 'Có lỗi xảy ra');
+                }
+            } catch (error) {
+                showStatus('order-status', `Lỗi: ${error.message}`, 'error');
+            }
+        }
+
+        // Step 2: Generate Audio
+        async function generateAudio() {
+            if (!currentUUID) {
+                alert('Vui lòng tạo order trước');
+                return;
+            }
+
+            showStatus('audio-status', 'Đang tạo audio...', 'processing');
+            updateStepIndicator(2);
+
+            try {
+                const response = await fetch(`${API_BASE}/audio`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'User-Agent': navigator.userAgent
+                    },
+                    body: JSON.stringify({
+                        uuid: currentUUID,
+                        use_script: true
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showStatus('audio-status', 'Đang xử lý audio...', 'processing');
+                    
+                    // Poll for completion
+                    pollAudioStatus(data.uuid);
+                } else {
+                    throw new Error(data.error || 'Có lỗi xảy ra');
+                }
+            } catch (error) {
+                showStatus('audio-status', `Lỗi: ${error.message}`, 'error');
+            }
+        }
+
+        async function pollAudioStatus(uuid) {
+            try {
+                const response = await fetch(`${API_BASE}/audio/get?uuid=${uuid}`);
+                const data = await response.json();
+
+                if (data.status === 'completed' && data.audio_path) {
+                    audioURL = data.audio_path;
+                    document.getElementById('audio-url').value = audioURL;
+
+                    showStatus('audio-status', 'Audio đã được tạo thành công!', 'completed');
+                    showResult('audio-result', `
+                        <h4>✅ Audio Generated Successfully</h4>
+                        <p><a href="${audioURL}" target="_blank">Nghe Audio</a></p>
+                    `);
+
+                    // Enable next step
+                    document.getElementById('image-btn').disabled = false;
+                    updateProgress(2);
+                } else if (data.status === 'processing') {
+                    setTimeout(() => pollAudioStatus(uuid), 3000);
+                } else {
+                    throw new Error('Audio generation failed');
+                }
+            } catch (error) {
+                showStatus('audio-status', `Lỗi: ${error.message}`, 'error');
+            }
+        }
+
+        // Step 3: Generate Images
+        async function generateImages() {
+            if (!currentUUID) {
+                alert('Vui lòng tạo order trước');
+                return;
+            }
+
+            showStatus('image-status', 'Đang tạo hình ảnh...', 'processing');
+            updateStepIndicator(3);
+
+            try {
+                const response = await fetch(`${API_BASE}/imagen`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'User-Agent': navigator.userAgent
+                    },
+                    body: JSON.stringify({
+                        uuid: currentUUID,
+                        use_script: true
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showStatus('image-status', 'Đang xử lý hình ảnh...', 'processing');
+                    
+                    // Poll for completion
+                    pollImageStatus(data.uuid);
+                } else {
+                    throw new Error(data.error || 'Có lỗi xảy ra');
+                }
+            } catch (error) {
+                showStatus('image-status', `Lỗi: ${error.message}`, 'error');
+            }
+        }
+
+        async function pollImageStatus(uuid) {
+            try {
+                const response = await fetch(`${API_BASE}/imagen/get?uuid=${uuid}`);
+                const data = await response.json();
+
+                if (data.status === 'completed' && data.images_path) {
+                    imageURLs = Array.isArray(data.images_path) ? data.images_path : [data.images_path];
+                    document.getElementById('image-urls').value = imageURLs.join('\n');
+
+                    showStatus('image-status', 'Hình ảnh đã được tạo thành công!', 'completed');
+                    
+                    let imageLinks = '';
+                    imageURLs.forEach((url, index) => {
+                        imageLinks += `<p><a href="${url}" target="_blank">Xem Hình ${index + 1}</a></p>`;
+                    });
+
+                    showResult('image-result', `
+                        <h4>✅ Images Generated Successfully</h4>
+                        ${imageLinks}
+                    `);
+
+                    // Enable next step
+                    document.getElementById('video-btn').disabled = false;
+                    updateProgress(3);
+                } else if (data.status === 'processing') {
+                    setTimeout(() => pollImageStatus(uuid), 3000);
+                } else {
+                    throw new Error('Image generation failed');
+                }
+            } catch (error) {
+                showStatus('image-status', `Lỗi: ${error.message}`, 'error');
+            }
+        }
+
+        // Step 4: Render Video
+        async function renderVideo() {
+            if (!currentUUID || !audioURL || imageURLs.length === 0) {
+                alert('Vui lòng hoàn thành các bước trước');
+                return;
+            }
+
+            showStatus('video-status', 'Đang render video...', 'processing');
+            updateStepIndicator(4);
+
+            try {
+                const response = await fetch(`${API_BASE}/video`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'User-Agent': navigator.userAgent
+                    },
+                    body: JSON.stringify({
+                        uuid: currentUUID,
+                        url_audio: audioURL,
+                        url_images: imageURLs
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showStatus('video-status', 'Đang xử lý video...', 'processing');
+                    
+                    // Poll for completion
+                    pollVideoStatus(data.uuid);
+                } else {
+                    throw new Error(data.error || 'Có lỗi xảy ra');
+                }
+            } catch (error) {
+                showStatus('video-status', `Lỗi: ${error.message}`, 'error');
+            }
+        }
+
+        async function pollVideoStatus(uuid) {
+            try {
+                const response = await fetch(`${API_BASE}/video/get?uuid=${uuid}`);
+                const data = await response.json();
+
+                if (data.status === 'completed' && data.video_path) {
+                    showStatus('video-status', 'Video đã được render thành công!', 'completed');
+                    showResult('video-result', `
+                        <h4>🎉 Video Rendered Successfully!</h4>
+                        <p><a href="${data.video_path}" target="_blank" class="btn btn-success">Tải Video</a></p>
+                        <p>Chúc mừng! Bạn đã tạo thành công video từ YouTube.</p>
+                    `);
+
+                    updateProgress(4);
+                } else if (data.status === 'processing' || data.status === 'rendering started') {
+                    setTimeout(() => pollVideoStatus(uuid), 5000);
+                } else {
+                    throw new Error('Video rendering failed');
+                }
+            } catch (error) {
+                showStatus('video-status', `Lỗi: ${error.message}`, 'error');
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStepIndicator(1);
+            updateProgress(0);
+        });
+    </script>
+</body>
+</html>

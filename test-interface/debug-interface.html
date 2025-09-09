@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Render Order Theta - Debug Interface</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .main-content {
+            padding: 30px;
+        }
+
+        .step {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            background: #f9f9f9;
+        }
+
+        .step.active {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .step.completed {
+            border-color: #27ae60;
+            background: #e8f5e8;
+        }
+
+        .step.error {
+            border-color: #e74c3c;
+            background: #fdf2f2;
+        }
+
+        .step h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #34495e;
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-weight: 600;
+        }
+
+        .status.processing {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        .status.completed {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .result {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid #667eea;
+        }
+
+        .result pre {
+            background: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-size: 12px;
+            max-height: 200px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .uuid-display {
+            background: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+            word-break: break-all;
+            margin: 10px 0;
+        }
+
+        .debug-info {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+
+        .debug-info h5 {
+            color: #495057;
+            margin-bottom: 10px;
+        }
+
+        .debug-info pre {
+            background: #e9ecef;
+            padding: 10px;
+            border-radius: 3px;
+            font-size: 11px;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            padding: 0 20px;
+        }
+
+        .step-indicator .step-dot {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #666;
+            position: relative;
+        }
+
+        .step-indicator .step-dot.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .step-indicator .step-dot.completed {
+            background: #27ae60;
+            color: white;
+        }
+
+        .step-indicator .step-dot.error {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .step-indicator .step-dot:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 100%;
+            width: 80px;
+            height: 2px;
+            background: #e0e0e0;
+            transform: translateY(-50%);
+        }
+
+        .step-indicator .step-dot.completed:not(:last-child)::after {
+            background: #27ae60;
+        }
+
+        .step-indicator .step-dot.error:not(:last-child)::after {
+            background: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔧 Video Render Order Theta - Debug Interface</h1>
+            <p>Giao diện debug chi tiết để kiểm tra từng bước</p>
+        </div>
+
+        <div class="main-content">
+            <!-- Step Indicator -->
+            <div class="step-indicator">
+                <div class="step-dot active" id="step1-dot">1</div>
+                <div class="step-dot" id="step2-dot">2</div>
+                <div class="step-dot" id="step3-dot">3</div>
+                <div class="step-dot" id="step4-dot">4</div>
+                <div class="step-dot" id="step5-dot">5</div>
+                <div class="step-dot" id="step6-dot">6</div>
+            </div>
+
+            <!-- Step 1: Create Order -->
+            <div class="step active" id="step1">
+                <h3>📝 Bước 1: Tạo Order từ YouTube</h3>
+                <div class="form-group">
+                    <label for="youtube-url">URL YouTube:</label>
+                    <input type="url" id="youtube-url" placeholder="https://www.youtube.com/watch?v=..." value="https://www.youtube.com/watch?v=H45Ky-SsCGU">
+                </div>
+                <div class="form-group">
+                    <label for="order-content">Nội dung Order:</label>
+                    <textarea id="order-content" placeholder="Mô tả nội dung bạn muốn tạo...">Keyword: Phi tần nam Ottman đã từng trải qua những điều kinh hoàng nào. Follow ý tưởng nội dung Video tham khảo -> triển khai dàn ý như các video cũ trên kênh - Bố cục tương tự video gốc: Gia tăng thêm yếu tố chàng trai phía trước bị bắt nạt, đáng sợ. Nhân vật nam phía sau cười nham hiểu. Phong cái thiết kế thời ottoman</textarea>
+                </div>
+                <button class="btn" onclick="createOrder()">Tạo Order</button>
+                <div id="order-status" class="hidden"></div>
+                <div id="order-result" class="hidden"></div>
+            </div>
+
+            <!-- Step 2: Wait for Order Completion -->
+            <div class="step" id="step2">
+                <h3>⏳ Bước 2: Chờ Order Hoàn Thành</h3>
+                <div class="form-group">
+                    <label for="check-uuid">UUID để kiểm tra:</label>
+                    <input type="text" id="check-uuid" placeholder="UUID sẽ được điền tự động" readonly>
+                </div>
+                <button class="btn" onclick="waitForOrderCompletion()" id="wait-btn" disabled>Chờ Order Hoàn Thành</button>
+                <div id="wait-status" class="hidden"></div>
+                <div id="wait-result" class="hidden"></div>
+            </div>
+
+            <!-- Step 3: Generate Audio -->
+            <div class="step" id="step3">
+                <h3>🎵 Bước 3: Tạo Audio</h3>
+                <div class="form-group">
+                    <label for="audio-uuid">UUID từ bước 1:</label>
+                    <input type="text" id="audio-uuid" placeholder="UUID sẽ được điền tự động" readonly>
+                </div>
+                <button class="btn" onclick="generateAudio()" id="audio-btn" disabled>Tạo Audio</button>
+                <div id="audio-status" class="hidden"></div>
+                <div id="audio-result" class="hidden"></div>
+            </div>
+
+            <!-- Step 4: Check Audio Status -->
+            <div class="step" id="step4">
+                <h3>🔍 Bước 4: Kiểm tra Audio Status</h3>
+                <div class="form-group">
+                    <label for="audio-check-uuid">UUID để kiểm tra audio:</label>
+                    <input type="text" id="audio-check-uuid" placeholder="UUID sẽ được điền tự động" readonly>
+                </div>
+                <button class="btn" onclick="checkAudioStatus()" id="audio-check-btn" disabled>Kiểm tra Audio</button>
+                <div id="audio-check-status" class="hidden"></div>
+                <div id="audio-check-result" class="hidden"></div>
+            </div>
+
+            <!-- Step 5: Generate Images -->
+            <div class="step" id="step5">
+                <h3>🖼️ Bước 5: Tạo Hình Ảnh</h3>
+                <div class="form-group">
+                    <label for="image-uuid">UUID từ bước 1:</label>
+                    <input type="text" id="image-uuid" placeholder="UUID sẽ được điền tự động" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="image-count">Số lượng hình ảnh:</label>
+                    <select id="image-count">
+                        <option value="5">5 hình</option>
+                        <option value="10" selected>10 hình</option>
+                        <option value="15">15 hình</option>
+                        <option value="20">20 hình</option>
+                    </select>
+                </div>
+                <button class="btn" onclick="generateImages()" id="image-btn" disabled>Tạo Hình Ảnh</button>
+                <div id="image-status" class="hidden"></div>
+                <div id="image-result" class="hidden"></div>
+            </div>
+
+            <!-- Quick Image Generation -->
+            <div class="step" id="quick-image-step">
+                <h3>⚡ Tạo Hình Ảnh Nhanh (Sử dụng UUID có sẵn)</h3>
+                <div class="form-group">
+                    <label for="quick-uuid">Nhập UUID có sẵn:</label>
+                    <input type="text" id="quick-uuid" placeholder="Nhập UUID đã có để tạo hình ảnh">
+                </div>
+                <div class="form-group">
+                    <label for="quick-image-count">Số lượng hình ảnh:</label>
+                    <select id="quick-image-count">
+                        <option value="5">5 hình</option>
+                        <option value="10" selected>10 hình</option>
+                        <option value="15">15 hình</option>
+                        <option value="20">20 hình</option>
+                    </select>
+                </div>
+                <button class="btn" onclick="quickGenerateImages()">Tạo Hình Ảnh Nhanh</button>
+                <div id="quick-image-status" class="hidden"></div>
+                <div id="quick-image-result" class="hidden"></div>
+            </div>
+
+            <!-- Step 6: Check Image Status -->
+            <div class="step" id="step6">
+                <h3>🔍 Bước 6: Kiểm tra Hình Ảnh Status</h3>
+                <div class="form-group">
+                    <label for="image-check-uuid">UUID để kiểm tra hình ảnh:</label>
+                    <input type="text" id="image-check-uuid" placeholder="UUID sẽ được điền tự động" readonly>
+                </div>
+                <button class="btn" onclick="checkImageStatus()" id="image-check-btn" disabled>Kiểm tra Hình Ảnh</button>
+                <div id="image-check-status" class="hidden"></div>
+                <div id="image-check-result" class="hidden"></div>
+            </div>
+
+            <!-- Current UUID Display -->
+            <div class="debug-info">
+                <h5>🆔 Current UUID Information</h5>
+                <div id="current-uuid-info">
+                    <p><strong>Current UUID:</strong> <span id="current-uuid-display">Chưa có</span></p>
+                    <p><strong>Order Status:</strong> <span id="current-order-status">Chưa có</span></p>
+                    <p><strong>Audio Status:</strong> <span id="current-audio-status">Chưa có</span></p>
+                    <button class="btn" onclick="copyCurrentUUID()" id="copy-uuid-btn" disabled>Copy UUID</button>
+                    <button class="btn" onclick="useCurrentUUIDForQuickImage()" id="use-current-uuid-btn" disabled>Dùng UUID này tạo hình ảnh</button>
+                </div>
+            </div>
+
+            <!-- Debug Information -->
+            <div class="debug-info">
+                <h5>🐛 Debug Information</h5>
+                <div id="debug-log">
+                    <p>Chưa có thông tin debug...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentUUID = null;
+        let orderData = null;
+        let orderCompleted = false;
+        let audioCompleted = false;
+
+        // API Base URL
+        const API_BASE = window.location.origin + '/api/v1/tasks';
+
+        // Debug logging
+        function debugLog(message, data = null) {
+            const debugDiv = document.getElementById('debug-log');
+            const timestamp = new Date().toLocaleTimeString();
+            let logEntry = `[${timestamp}] ${message}`;
+            
+            if (data) {
+                logEntry += `\nData: ${JSON.stringify(data, null, 2)}`;
+            }
+            
+            debugDiv.innerHTML = `<pre>${logEntry}</pre>` + debugDiv.innerHTML;
+        }
+
+        // Update current UUID info
+        function updateCurrentUUIDInfo() {
+            document.getElementById('current-uuid-display').textContent = currentUUID || 'Chưa có';
+            document.getElementById('current-order-status').textContent = orderCompleted ? 'Hoàn thành' : 'Chưa hoàn thành';
+            document.getElementById('current-audio-status').textContent = audioCompleted ? 'Hoàn thành' : 'Chưa hoàn thành';
+            
+            // Enable/disable buttons based on UUID availability
+            const hasUUID = currentUUID && currentUUID !== 'Chưa có';
+            document.getElementById('copy-uuid-btn').disabled = !hasUUID;
+            document.getElementById('use-current-uuid-btn').disabled = !hasUUID;
+        }
+
+        // Copy current UUID to clipboard
+        function copyCurrentUUID() {
+            if (currentUUID) {
+                navigator.clipboard.writeText(currentUUID).then(() => {
+                    alert('UUID đã được copy vào clipboard!');
+                }).catch(err => {
+                    // Fallback for older browsers
+                    const textArea = document.createElement('textarea');
+                    textArea.value = currentUUID;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    alert('UUID đã được copy vào clipboard!');
+                });
+            }
+        }
+
+        // Use current UUID for quick image generation
+        function useCurrentUUIDForQuickImage() {
+            if (currentUUID) {
+                document.getElementById('quick-uuid').value = currentUUID;
+                // Scroll to quick image section
+                document.getElementById('quick-image-step').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Utility functions
+        function showStatus(elementId, message, type = 'processing') {
+            const element = document.getElementById(elementId);
+            element.className = `status ${type}`;
+            element.textContent = message;
+            element.classList.remove('hidden');
+        }
+
+        function showResult(elementId, content) {
+            const element = document.getElementById(elementId);
+            element.innerHTML = content;
+            element.classList.remove('hidden');
+        }
+
+        function updateStepIndicator(activeStep, errorStep = null) {
+            for (let i = 1; i <= 6; i++) {
+                const dot = document.getElementById(`step${i}-dot`);
+                const step = document.getElementById(`step${i}`);
+                
+                if (i === errorStep) {
+                    dot.classList.add('error');
+                    dot.classList.remove('active', 'completed');
+                    step.classList.add('error');
+                    step.classList.remove('active', 'completed');
+                } else if (i < activeStep) {
+                    dot.classList.add('completed');
+                    dot.classList.remove('active', 'error');
+                    step.classList.add('completed');
+                    step.classList.remove('active', 'error');
+                } else if (i === activeStep) {
+                    dot.classList.add('active');
+                    dot.classList.remove('completed', 'error');
+                    step.classList.add('active');
+                    step.classList.remove('completed', 'error');
+                } else {
+                    dot.classList.remove('active', 'completed', 'error');
+                    step.classList.remove('active', 'completed', 'error');
+                }
+            }
+        }
+
+        // Step 1: Create Order
+        async function createOrder() {
+            const url = document.getElementById('youtube-url').value;
+            const order = document.getElementById('order-content').value;
+
+            if (!url) {
+                alert('Vui lòng nhập URL YouTube');
+                return;
+            }
+
+            showStatus('order-status', 'Đang tạo order...', 'processing');
+            updateStepIndicator(1);
+            debugLog('Creating order...', { url, order });
+
+            try {
+                const requestBody = {
+                    url: url,
+                    order: order,
+                    platform: 'youtube',
+                    language: 'en',
+                    task: 'Gemini',
+                    length: 10000
+                };
+
+                debugLog('Sending request to /create', requestBody);
+
+                const response = await fetch(`${API_BASE}/create`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'User-Agent': navigator.userAgent
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                const data = await response.json();
+                debugLog('Received response from /create', { status: response.status, data });
+
+                if (response.ok) {
+                    currentUUID = data.uuid;
+                    document.getElementById('check-uuid').value = currentUUID;
+                    document.getElementById('audio-uuid').value = currentUUID;
+                    document.getElementById('audio-check-uuid').value = currentUUID;
+                    document.getElementById('image-uuid').value = currentUUID;
+                    document.getElementById('image-check-uuid').value = currentUUID;
+                    updateCurrentUUIDInfo();
+
+                    showStatus('order-status', 'Order đã được tạo thành công!', 'completed');
+                    showResult('order-result', `
+                        <h4>✅ Order Created Successfully</h4>
+                        <div class="uuid-display">UUID: ${currentUUID}</div>
+                        <p>Order đã được tạo và đang xử lý trong background.</p>
+                        <p><strong>Lưu ý:</strong> Order cần thời gian để xử lý. Hãy chờ cho đến khi status = "done".</p>
+                    `);
+
+                    // Enable next step
+                    document.getElementById('wait-btn').disabled = false;
+                    updateStepIndicator(2);
+                } else {
+                    throw new Error(data.error || 'Có lỗi xảy ra');
+                }
+            } catch (error) {
+                debugLog('Error creating order', error.message);
+                showStatus('order-status', `Lỗi: ${error.message}`, 'error');
+                updateStepIndicator(1, 1);
+            }
+        }
+
+        // Step 2: Wait for Order Completion
+        async function waitForOrderCompletion() {
+            if (!currentUUID) {
+                alert('Vui lòng tạo order trước');
+                return;
+            }
+
+            showStatus('wait-status', 'Đang kiểm tra order...', 'processing');
+            debugLog('Waiting for order completion...', { uuid: currentUUID });
+
+            const checkInterval = setInterval(async () => {
+                try {
+                    const response = await fetch(`${API_BASE}/create/get?uuid=${currentUUID}`);
+                    const data = await response.json();
+                    debugLog('Order status check', { status: response.status, data });
+
+                    if (response.ok) {
+                        orderData = data;
+                        showStatus('wait-status', `Order status: ${data.status}`, 'processing');
+                        
+                        if (data.status === 'done') {
+                            clearInterval(checkInterval);
+                            orderCompleted = true;
+                            updateCurrentUUIDInfo();
+                            showStatus('wait-status', 'Order đã hoàn thành!', 'completed');
+                            showResult('wait-result', `
+                                <h4>✅ Order Completed</h4>
+                                <div class="debug-info">
+                                    <h5>Order Data:</h5>
+                                    <pre>${JSON.stringify(data, null, 2)}</pre>
+                                </div>
+                                <p><strong>Status:</strong> ${data.status}</p>
+                                <p><strong>Content Order:</strong> ${data.content_order ? 'Available' : 'Not available'}</p>
+                            `);
+
+                            // Enable next step
+                            document.getElementById('audio-btn').disabled = false;
+                            updateStepIndicator(3);
+                        } else if (data.status === 'error') {
+                            clearInterval(checkInterval);
+                            showStatus('wait-status', 'Order failed!', 'error');
+                            updateStepIndicator(2, 2);
+                        }
+                    } else {
+                        throw new Error(data.error || 'Không thể lấy thông tin order');
+                    }
+                } catch (error) {
+                    clearInterval(checkInterval);
+                    debugLog('Error checking order status', error.message);
+                    showStatus('wait-status', `Lỗi: ${error.message}`, 'error');
+                    updateStepIndicator(2, 2);
+                }
+            }, 3000); // Check every 3 seconds
+        }
+
+        // Step 3: Generate Audio
+        async function generateAudio() {
+            if (!currentUUID || !orderCompleted) {
+                alert('Vui lòng chờ order hoàn thành trước');
+                return;
+            }
+
+            showStatus('audio-status', 'Đang tạo audio...', 'processing');
+            updateStepIndicator(3);
+            debugLog('Generating audio...', { uuid: currentUUID });
+
+            try {
+                const requestBody = {
+                    uuid: currentUUID,
+                    use_script: false
+                };
+
+                debugLog('Sending audio request', requestBody);
+
+                const response = await fetch(`${API_BASE}/audio`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'User-Agent': navigator.userAgent
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                const data = await response.json();
+                debugLog('Received audio response', { status: response.status, data });
+
+                if (response.ok) {
+                    showStatus('audio-status', 'Audio request sent!', 'completed');
+                    showResult('audio-result', `
+                        <h4>✅ Audio Request Sent</h4>
+                        <div class="debug-info">
+                            <h5>Response Data:</h5>
+                            <pre>${JSON.stringify(data, null, 2)}</pre>
+                        </div>
+                        <p>Audio đang được xử lý trong background.</p>
+                    `);
+
+                    // Enable next step
+                    document.getElementById('audio-check-btn').disabled = false;
+                    updateStepIndicator(4);
+                } else {
+                    throw new Error(data.error || 'Có lỗi xảy ra khi tạo audio');
+                }
+            } catch (error) {
+                debugLog('Error generating audio', error.message);
+                showStatus('audio-status', `Lỗi: ${error.message}`, 'error');
+                updateStepIndicator(3, 3);
+            }
+        }
+
+        // Step 4: Check Audio Status
+        async function checkAudioStatus() {
+            if (!currentUUID) {
+                alert('Vui lòng tạo order trước');
+                return;
+            }
+
+            showStatus('audio-check-status', 'Đang kiểm tra audio...', 'processing');
+            debugLog('Checking audio status...', { uuid: currentUUID });
+
+            try {
+                const response = await fetch(`${API_BASE}/audio/get?uuid=${currentUUID}`);
+                const data = await response.json();
+                debugLog('Received audio status', { status: response.status, data });
+
+                if (response.ok) {
+                    audioCompleted = true;
+                    updateCurrentUUIDInfo();
+                    showStatus('audio-check-status', 'Audio status retrieved!', 'completed');
+                    showResult('audio-check-result', `
+                        <h4>🎵 Audio Status</h4>
+                        <div class="debug-info">
+                            <h5>Audio Data:</h5>
+                            <pre>${JSON.stringify(data, null, 2)}</pre>
+                        </div>
+                        <p><strong>Status:</strong> ${data.status}</p>
+                        <p><strong>Audio Path:</strong> ${data.audio_path || 'Not available'}</p>
+                        ${data.audio_path ? `<p><a href="${data.audio_path}" target="_blank">Nghe Audio</a></p>` : ''}
+                    `);
+
+                    // Enable next step
+                    document.getElementById('image-btn').disabled = false;
+                    updateStepIndicator(5);
+                } else {
+                    throw new Error(data.error || 'Không thể lấy thông tin audio');
+                }
+            } catch (error) {
+                debugLog('Error checking audio status', error.message);
+                showStatus('audio-check-status', `Lỗi: ${error.message}`, 'error');
+                updateStepIndicator(4, 4);
+            }
+        }
+
+        // Step 5: Generate Images
+        async function generateImages() {
+            if (!currentUUID || !orderCompleted) {
+                alert('Vui lòng chờ order hoàn thành trước');
+                return;
+            }
+
+            const imageCount = document.getElementById('image-count').value;
+            showStatus('image-status', 'Đang tạo hình ảnh...', 'processing');
+            updateStepIndicator(5);
+            debugLog('Generating images...', { uuid: currentUUID, count: imageCount });
+
+            try {
+                const requestBody = {
+                    uuid: currentUUID,
+                    use_script: false,
+                    count: parseInt(imageCount)
+                };
+
+                debugLog('Sending image request', requestBody);
+
+                const response = await fetch(`${API_BASE}/picture`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'User-Agent': navigator.userAgent
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                const data = await response.json();
+                debugLog('Received image response', { status: response.status, data });
+
+                if (response.ok) {
+                    showStatus('image-status', 'Image request sent!', 'completed');
+                    showResult('image-result', `
+                        <h4>🖼️ Image Request Sent</h4>
+                        <div class="debug-info">
+                            <h5>Response Data:</h5>
+                            <pre>${JSON.stringify(data, null, 2)}</pre>
+                        </div>
+                        <p>Hình ảnh đang được xử lý trong background.</p>
+                        <p><strong>Số lượng yêu cầu:</strong> ${imageCount} hình</p>
+                    `);
+
+                    // Enable next step
+                    document.getElementById('image-check-btn').disabled = false;
+                    updateStepIndicator(6);
+                } else {
+                    throw new Error(data.error || 'Có lỗi xảy ra khi tạo hình ảnh');
+                }
+            } catch (error) {
+                debugLog('Error generating images', error.message);
+                showStatus('image-status', `Lỗi: ${error.message}`, 'error');
+                updateStepIndicator(5, 5);
+            }
+        }
+
+        // Step 6: Check Image Status
+        async function checkImageStatus() {
+            if (!currentUUID) {
+                alert('Vui lòng tạo order trước');
+                return;
+            }
+
+            showStatus('image-check-status', 'Đang kiểm tra hình ảnh...', 'processing');
+            debugLog('Checking image status...', { uuid: currentUUID });
+
+            try {
+                const response = await fetch(`${API_BASE}/picture/get?uuid=${currentUUID}`);
+                const data = await response.json();
+                debugLog('Received image status', { status: response.status, data });
+
+                if (response.ok) {
+                    showStatus('image-check-status', 'Image status retrieved!', 'completed');
+                    
+                    let imageGallery = '';
+                    if (data.image_paths && data.image_paths.length > 0) {
+                        imageGallery = `
+                            <h5>🖼️ Generated Images:</h5>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin: 10px 0;">
+                                ${data.image_paths.map((path, index) => `
+                                    <div style="text-align: center;">
+                                        <img src="${path}" alt="Generated Image ${index + 1}" 
+                                             style="width: 100%; height: 150px; object-fit: cover; border-radius: 5px; border: 1px solid #ddd;">
+                                        <p style="font-size: 12px; margin: 5px 0;">Image ${index + 1}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `;
+                    }
+
+                    showResult('image-check-result', `
+                        <h4>🖼️ Image Status</h4>
+                        <div class="debug-info">
+                            <h5>Image Data:</h5>
+                            <pre>${JSON.stringify(data, null, 2)}</pre>
+                        </div>
+                        <p><strong>Status:</strong> ${data.status}</p>
+                        <p><strong>Total Images:</strong> ${data.image_paths ? data.image_paths.length : 0}</p>
+                        ${imageGallery}
+                    `);
+                } else {
+                    throw new Error(data.error || 'Không thể lấy thông tin hình ảnh');
+                }
+            } catch (error) {
+                debugLog('Error checking image status', error.message);
+                showStatus('image-check-status', `Lỗi: ${error.message}`, 'error');
+                updateStepIndicator(6, 6);
+            }
+        }
+
+        // Quick Image Generation (using existing UUID)
+        async function quickGenerateImages() {
+            const uuid = document.getElementById('quick-uuid').value.trim();
+            const imageCount = document.getElementById('quick-image-count').value;
+
+            if (!uuid) {
+                alert('Vui lòng nhập UUID');
+                return;
+            }
+
+            showStatus('quick-image-status', 'Đang tạo hình ảnh...', 'processing');
+            debugLog('Quick generating images...', { uuid, count: imageCount });
+
+            try {
+                const requestBody = {
+                    uuid: uuid,
+                    use_script: false,
+                    count: parseInt(imageCount)
+                };
+
+                debugLog('Sending quick image request', requestBody);
+
+                const response = await fetch(`${API_BASE}/picture`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'User-Agent': navigator.userAgent
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                const data = await response.json();
+                debugLog('Received quick image response', { status: response.status, data });
+
+                if (response.ok) {
+                    showStatus('quick-image-status', 'Image request sent!', 'completed');
+                    showResult('quick-image-result', `
+                        <h4>⚡ Quick Image Request Sent</h4>
+                        <div class="debug-info">
+                            <h5>Response Data:</h5>
+                            <pre>${JSON.stringify(data, null, 2)}</pre>
+                        </div>
+                        <p>Hình ảnh đang được xử lý trong background.</p>
+                        <p><strong>UUID:</strong> ${uuid}</p>
+                        <p><strong>Số lượng yêu cầu:</strong> ${imageCount} hình</p>
+                        <p><strong>Lưu ý:</strong> Sử dụng UUID này để kiểm tra status sau: ${uuid}</p>
+                    `);
+
+                    // Auto-fill the check UUID field
+                    document.getElementById('image-check-uuid').value = uuid;
+                } else {
+                    throw new Error(data.error || 'Có lỗi xảy ra khi tạo hình ảnh');
+                }
+            } catch (error) {
+                debugLog('Error quick generating images', error.message);
+                showStatus('quick-image-status', `Lỗi: ${error.message}`, 'error');
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStepIndicator(1);
+        });
+    </script>
+</body>
+</html>
