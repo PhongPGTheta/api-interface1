@@ -1,0 +1,66 @@
+Welcome to Ubuntu 24.04.3 LTS (GNU/Linux 6.8.0-79-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Wed Sep 10 01:31:07 AM UTC 2025
+
+  System load:  0.02               Processes:              236
+  Usage of /:   14.3% of 56.78GB   Users logged in:        0
+  Memory usage: 8%                 IPv4 address for ens33: 192.168.170.129
+  Swap usage:   0%
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+
+   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
+
+Expanded Security Maintenance for Applications is not enabled.
+
+0 updates can be applied immediately.
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+Last login: Tue Sep  9 10:52:00 2025 from 192.168.170.1
+(base) phong@phong:~$ ls ~
+]               miniconda3                         Miniconda3-latest-Linux-x86_64.sh.1  ngrok-stable-linux-amd64.zip
+api-interface1  Miniconda3-latest-Linux-x86_64.sh  ngrok                                Video-render-order-theta
+(base) phong@phong:~$ ^C
+(base) phong@phong:~$ ls -l ~/ngrok
+-rwxr-xr-x 1 phong phong 25129144 Aug 28 20:38 /home/phong/ngrok
+(base) phong@phong:~$ sudo mv ~/ngrok /usr/local/bin/
+[sudo] password for phong: 
+(base) phong@phong:~$ ngrok version
+ngrok version 3.27.0
+(base) phong@phong:~$ ngrok config add-authtoken 32OwMLqpBKp02Rw6pPiKjdHU2kX_77jEeSewWigxU4yYyL8MZ
+Authtoken saved to configuration file: /home/phong/.config/ngrok/ngrok.yml
+(base) phong@phong:~$ ngrok http 8000
+(base) phong@phong:~$ ngrok http --url=https://drew-weest-trish.ngrok-free.app 8000
+(base) phong@phong:~$ ^C
+(base) phong@phong:~$ Welcome to Ubuntu 24.04.3 LTS (GNU/Linux 6.8.0-79-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Wed Sep 10 06:45:38 AM UTC 2025
+
+  System load:  0.02               Processes:              229
+  Usage of /:   17.2% of 56.78GB   Users logged in:        1
+  Memory usage: 26%                IPv4 address for ens33: 192.168.170.129
+  Swap usage:   0%
+
+
+Expanded Security Maintenance for Applications is not enabled.
+
+0 updates can be applied immediately.
+
+1 additional security update can be applied with ESM Apps.
+Learn more about enabling ESM Apps service at https://ubuntu.com/esm
+
+
+Last login: Wed Sep 10 04:11:02 2025 from 192.168.170.1
+(base) phong@phong:~$ 

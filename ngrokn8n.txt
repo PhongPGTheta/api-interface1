@@ -1,0 +1,64 @@
+Welcome to Ubuntu 24.04.3 LTS (GNU/Linux 6.8.0-79-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Wed Sep 10 04:11:02 AM UTC 2025
+
+  System load:  0.16               Processes:              232
+  Usage of /:   17.2% of 56.78GB   Users logged in:        1
+  Memory usage: 26%                IPv4 address for ens33: 192.168.170.129
+  Swap usage:   0%
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+
+   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
+
+Expanded Security Maintenance for Applications is not enabled.
+
+0 updates can be applied immediately.
+
+1 additional security update can be applied with ESM Apps.
+Learn more about enabling ESM Apps service at https://ubuntu.com/esm
+
+
+Last login: Wed Sep 10 02:18:47 2025 from 192.168.170.1
+(base) phong@phong:~$ ./ngrok http 5678
+-bash: ./ngrok: No such file or directory
+(base) phong@phong:~$ ls -la
+total 325852
+drwxr-x--- 11 phong phong       4096 Sep 10 02:30 .
+drwxr-xr-x  4 root  root        Welcome to Ubuntu 24.04.3 LTS (GNU/Linux 6.8.0-79-generic x86_64)
+drwxrwxr-x  6 phong phong       4096 Sep  9 10:25 api-interface1
+ * Documentation:  https://help.ubuntu.com8 10:32 .bash_history
+ * Management:     https://landscape.canonical.com.bash_logout
+ * Support:        https://ubuntu.com/pro 9 10:23 .bashrc
+drwx------  5 phong phong       4096 Sep  9 10:28 .cache
+ System information as of Wed Sep 10 06:45:38 AM UTC 2025
+drwx------  3 phong phong       4096 Sep 10 01:38 .config
+  System load:  0.02               Processes:              229
+  Usage of /:   17.2% of 56.78GB   Users logged in:        1
+  Memory usage: 26%                IPv4 address for ens33: 192.168.170.129
+  Swap usage:   0%g phong  162129736 Aug 25 21:03 Miniconda3-latest-Linux-x86_64.sh
+-rw-rw-r--  1 phong phong  162129736 Aug 25 21:03 Miniconda3-latest-Linux-x86_64.sh.1
+drwxrwxr-x  3 phong docker      4096 Sep 10 04:06 n8n-docker
+Expanded Security Maintenance for Applications is not enabled.-linux-amd64.zip
+-rw-r--r--  1 phong phong        807 Mar 31  2024 .profile
+0 updates can be applied immediately.Sep  8 10:01 .ssh
+-rw-r--r--  1 phong phong          0 Sep  8 10:03 .sudo_as_admin_successful
+1 additional security update can be applied with ESM Apps.nder-order-theta
+Learn more about enabling ESM Apps service at https://ubuntu.com/esm
+(base) phong@phong:~$ cd ngrok
+-bash: cd: ngrok: No such file or directory
+Last login: Wed Sep 10 06:45:42 2025 from 192.168.170.1
+(base) phong@phong:~$ ngrok http --url=nonambitiously-superjudicial-camryn.ngrok-free.app 5678r-order-theta
+(base) phong@phong:~$ nda3-latest-Linux-x86_64.sh.1  ngrok-stable-linux-amd64.zip
+(base) phong@phong:~$ ~/ngrok http 5678
+-bash: /home/phong/ngrok: No such file or directory
+(base) phong@phong:~$ ngrok config add-authtoken 31wevIGQjrBqXgCKlAqQgydgaao_jvcxZfLguc5Tc62C3UKG
+Authtoken saved to configuration file: /home/phong/.config/ngrok/ngrok.yml
+(base) phong@phong:~$ ngrok http --url=nonambitiously-superjudicial-camryn.ngrok-free.app 80
+(base) phong@phong:~$ ngrok http --url=nonambitiously-superjudicial-camryn.ngrok-free.app 80
+(base) phong@phong:~$ ngrok http --url=nonambitiously-superjudicial-camryn.ngrok-free.app 5678

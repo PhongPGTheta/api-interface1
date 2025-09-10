@@ -1,0 +1,113 @@
+Welcome to Ubuntu 24.04.3 LTS (GNU/Linux 6.8.0-79-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Wed Sep 10 01:31:07 AM UTC 2025
+
+  System load:  0.02               Processes:              236
+  Usage of /:   14.3% of 56.78GB   Users logged in:        0
+  Memory usage: 8%                 IPv4 address for ens33: 192.168.170.129
+  Swap usage:   0%
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+
+   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
+
+Expanded Security Maintenance for Applications is not enabled.
+
+0 updates can be applied immediately.
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+Last login: Wed Sep 10 01:31:48 2025 from 192.168.170.1
+(base) phong@phong:~$ ls ~
+]               miniconda3                         Miniconda3-latest-Linux-x86_64.sh.1  ngrok-stable-linux-amd64.zip
+api-interface1  Miniconda3-latest-Linux-x86_64.sh  ngrok                                Video-render-order-theta
+(base) phong@phong:~$ cd api-interface1
+(base) phong@phong:~/api-interface1$ cd app
+(base) phong@phong:~/api-interface1/app$ uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+Command 'uvicorn' not found, but can be installed with:
+sudo apt install uvicorn
+(base) phong@phong:~/api-interface1/app$ source ~/.bashrc
+(base) phong@phong:~/api-interface1/app$ conda activate apitest
+(apitest) phong@phong:~/api-interface1/app$ uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+INFO:     Will watch for changes in these directories: ['/home/phong/api-interface1/app']
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [1678] using StatReload
+INFO:     Started server process [1680]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+2025-09-10 01:39:10,565 - INFO - Request: GET http://192.168.170.129:8000/
+2025-09-10 01:39:10,567 - INFO - Response status: 200
+INFO:     192.168.170.1:63544 - "GET / HTTP/1.1" 200 OK
+2025-09-10 01:39:10,629 - INFO - Request: GET http://192.168.170.129:8000/favicon.ico
+2025-09-10 01:39:10,629 - INFO - Response status: 404
+INFO:     192.168.170.1:63544 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+2025-09-10 01:39:11,357 - INFO - Request: GET http://192.168.170.129:8000/
+2025-09-10 01:39:11,358 - INFO - Response status: 200
+INFO:     192.168.170.1:63544 - "GET / HTTP/1.1" 200 OK
+2025-09-10 01:39:12,074 - INFO - Request: GET http://192.168.170.129:8000/
+2025-09-10 01:39:12,075 - INFO - Response status: 200
+INFO:     192.168.170.1:63544 - "GET / HTTP/1.1" 200 OK
+2025-09-10 01:39:12,245 - INFO - Request: GET http://192.168.170.129:8000/
+2025-09-10 01:39:12,246 - INFO - Response status: 200
+INFO:     192.168.170.1:63544 - "GET / HTTP/1.1" 200 OK
+2025-09-10 01:39:12,558 - INFO - Request: GET http://192.168.170.129:8000/
+2025-09-10 01:39:12,559 - INFO - Response status: 200
+INFO:     192.168.170.1:63544 - "GET / HTTP/1.1" 200 OK
+2025-09-10 01:39:12,717 - INFO - Request: GET http://192.168.170.129:8000/
+2025-09-10 01:39:12,718 - INFO - Response status: 200
+INFO:     192.168.170.1:63544 - "GET / HTTP/1.1" 200 OK
+2025-09-10 01:39:25,893 - INFO - Request: GET http://192.168.170.129:8000/ui/debug-interface.html
+2025-09-10 01:39:25,894 - INFO - Response status: 200
+INFO:     192.168.170.1:63589 - "GET /ui/debug-interface.html HTTP/1.1" 200 OK
+2025-09-10 01:40:31,349 - INFO - Request: GET https://drew-weest-trish.ngrok-free.app/
+2025-09-10 01:40:31,352 - INFO - Response status: 200
+INFO:     14.232.67.70:0 - "GET / HTTP/1.1" 200 OK
+2025-09-10 01:40:31,806 - INFO - Request: GET https://drew-weest-trish.ngrok-free.app/favicon.ico
+2025-09-10 01:40:31,806 - INFO - Response status: 404
+INFO:     14.232.67.70:0 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+2025-09-10 01:40:40,310 - INFO - Request: GET https://drew-weest-trish.ngrok-free.app/ui/debug-interface.html
+2025-09-10 01:40:40,310 - INFO - Response status: 200
+INFO:     14.232.67.70:0 - "GET /ui/debug-interface.html HTTP/1.1" 200 OK
+2025-09-10 01:45:03,491 - INFO - Request: GET https://drew-weest-trish.ngrok-free.app/ui/debug-interface.html
+2025-09-10 01:45:03,494 - INFO - Response status: 200
+INFO:     14.232.67.70:0 - "GET /ui/debug-interface.html HTTP/1.1" 200 OK
+2025-09-10 01:45:04,240 - INFO - Request: GET https://drew-weest-trish.ngrok-free.app/favicon.ico
+2025-09-10 01:45:04,241 - INFO - Response status: 404
+INFO:     14.232.67.70:0 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+2025-09-10 02:17:17,539 - INFO - Request: GET https://drew-weest-trish.ngrok-free.app/ui/debug-interface.html
+2025-09-10 02:17:17,540 - INFO - Response status: 304
+INFO:     14.232.67.70:0 - "GET /ui/debug-interface.html HTTP/1.1" 304 Not Modified
+2025-09-10 04:16:32,369 - INFO - Request: GET https://drew-weest-trish.ngrok-free.app/
+2025-09-10 04:16:32,372 - INFO - Response status: 200
+INFO:     51.15.22.15:0 - "GET / HTTP/1.1" 200 OK
+Welcome to Ubuntu 24.04.3 LTS (GNU/Linux 6.8.0-79-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Wed Sep 10 06:45:38 AM UTC 2025
+
+  System load:  0.02               Processes:              229
+  Usage of /:   17.2% of 56.78GB   Users logged in:        1
+  Memory usage: 26%                IPv4 address for ens33: 192.168.170.129
+  Swap usage:   0%
+
+
+Expanded Security Maintenance for Applications is not enabled.
+
+0 updates can be applied immediately.
+
+1 additional security update can be applied with ESM Apps.
+Learn more about enabling ESM Apps service at https://ubuntu.com/esm
+
+
+Last login: Wed Sep 10 06:45:39 2025 from 192.168.170.1
+(base) phong@phong:~$ 
