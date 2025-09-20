@@ -1,0 +1,182 @@
+PhongPGTheta03
+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
+sk-Aw3pel5Q5GxFpt2cfJ0ZW6srN5xd2TTXIObyHOI98VPhfTNS
+docker exec -it --user root n8n-docker_n8n_1 sh
+apk update && apk add ffmpeg
+
+ffmpeg -version
+
+Welcome to Ubuntu 24.04.3 LTS (GNU/Linux 6.8.0-79-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Fri Sep 12 01:30:47 AM UTC 2025
+
+  System load:  0.78               Processes:              246
+  Usage of /:   17.3% of 56.78GB   Users logged in:        0
+  Memory usage: 12%                IPv4 address for ens33: 192.168.170.129
+  Swap usage:   0%
+
+
+Expanded Security Maintenance for Applications is not enabled.
+
+0 updates can be applied immediately.
+
+1 additional security update can be applied with ESM Apps.
+Learn more about enabling ESM Apps service at https://ubuntu.com/esm
+
+
+Last login: Thu Sep 11 06:57:49 2025 from 192.168.170.1
+(base) phong@phong:~$ cd n8n-docker/
+(base) phong@phong:~/n8n-docker$ docker ps
+CONTAINER ID   IMAGE              COMMAND                  CREATED        STATUS         PORTS                                       NAMES
+dce92c25a67b   n8nio/n8n:latest   "tini -- /docker-ent…"   45 hours ago   Up 4 minutes   0.0.0.0:5678->5678/tcp, :::5678->5678/tcp   n8n-docker_n8n_1
+(base) phong@phong:~/n8n-docker$ ^C
+(base) phong@phong:~/n8n-docker$ docker ps
+CONTAINER ID   IMAGE              COMMAND                  CREATED      STATUS          PORTS                                       NAMES
+dce92c25a67b   n8nio/n8n:latest   "tini -- /docker-ent…"   2 days ago   Up 27 seconds   0.0.0.0:5678->5678/tcp, :::5678->5678/tcp   n8n-docker_n8n_1
+(base) phong@phong:~/n8n-docker$ docker ps
+CONTAINER ID   IMAGE              COMMAND                  CREATED      STATUS         PORTS                                       NAMES
+dce92c25a67b   n8nio/n8n:latest   "tini -- /docker-ent…"   2 days ago   Up 4 minutes   0.0.0.0:5678->5678/tcp, :::5678->5678/tcp   n8n-docker_n8n_1
+(base) phong@phong:~/n8n-docker$ Welcome to Ubuntu 24.04.3 LTS (GNU/Linux 6.8.0-79-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Fri Sep 12 06:56:04 AM UTC 2025
+
+  System load:  0.09               Processes:              217
+  Usage of /:   17.4% of 56.78GB   Users logged in:        1
+  Memory usage: 17%                IPv4 address for ens33: 192.168.170.129
+  Swap usage:   0%
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+
+   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
+
+Expanded Security Maintenance for Applications is not enabled.
+
+1 update can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+1 additional security update can be applied with ESM Apps.
+Learn more about enabling ESM Apps service at https://ubuntu.com/esm
+
+
+Last login: Fri Sep 12 01:31:19 2025 from 192.168.170.1
+(base) phong@phong:~$ docker ps
+CONTAINER ID   IMAGE              COMMAND                  CREATED      STATUS       PORTS                                       NAMES
+dce92c25a67b   n8nio/n8n:latest   "tini -- /docker-ent…"   2 days ago   Up 2 hours   0.0.0.0:5678->5678/tcp, :::5678->5678/tcp   n8n-docker_n8n_1
+(base) phong@phong:~$ docker exec -it --user root n8n-docker_n8n_1 sh
+/home/node # apk update && apk add ffmpeg
+fetch https://dl-cdn.alpinelinux.org/alpine/v3.22/main/x86_64/APKINDEX.tar.gz
+fetch https://dl-cdn.alpinelinux.org/alpine/v3.22/community/x86_64/APKINDEX.tar.gz
+v3.22.1-395-g7ff2feda9bb [https://dl-cdn.alpinelinux.org/alpine/v3.22/main]
+v3.22.1-396-ge483f1470bb [https://dl-cdn.alpinelinux.org/alpine/v3.22/community]
+OK: 26321 distinct packages available
+(1/94) Installing libSvtAv1Enc (2.3.0-r0)
+(2/94) Installing libxau (1.0.12-r0)
+(3/94) Installing libmd (1.1.0-r0)
+(4/94) Installing libbsd (0.12.2-r0)
+(5/94) Installing libxdmcp (1.1.5-r1)
+(6/94) Installing libxcb (1.17.0-r0)
+(7/94) Installing libx11 (1.8.11-r0)
+(8/94) Installing hwdata-pci (0.395-r0)
+(9/94) Installing libpciaccess (0.18.1-r0)
+(10/94) Installing libdrm (2.4.124-r0)
+(11/94) Installing libxext (1.3.6-r2)
+(12/94) Installing libxfixes (6.0.1-r4)
+(13/94) Installing libffi (3.4.8-r0)
+(14/94) Installing wayland-libs-client (1.23.1-r3)
+(15/94) Installing libva (2.22.0-r1)
+(16/94) Installing libvdpau (1.5-r4)
+(17/94) Installing onevpl-libs (2023.3.1-r2)
+(18/94) Installing ffmpeg-libavutil (6.1.2-r2)
+(19/94) Installing libdav1d (1.5.1-r0)
+(20/94) Installing openexr-libiex (3.3.2-r0)
+(21/94) Installing openexr-libilmthread (3.3.2-r0)
+(22/94) Installing imath (3.1.12-r0)
+(23/94) Installing libdeflate (1.23-r0)
+(24/94) Installing openexr-libopenexrcore (3.3.2-r0)
+(25/94) Installing openexr-libopenexr (3.3.2-r0)
+(26/94) Installing giflib (5.2.2-r1)
+(27/94) Installing libhwy (1.0.7-r1)
+(28/94) Installing lcms2 (2.16-r0)
+(29/94) Installing libjxl (0.10.3-r2)
+(30/94) Installing lame-libs (3.100-r5)
+(31/94) Installing opus (1.5.2-r1)
+(32/94) Installing rav1e-libs (0.7.1-r0)
+(33/94) Installing libgomp (14.2.0-r6)
+(34/94) Installing soxr (0.1.3-r7)
+(35/94) Installing ffmpeg-libswresample (6.1.2-r2)
+(36/94) Installing libogg (1.3.5-r5)
+(37/94) Installing libtheora (1.1.1-r18)
+(38/94) Installing libvorbis (1.3.7-r2)
+(39/94) Installing libvpx (1.15.0-r0)
+(40/94) Installing x264-libs (0.164.3108-r0)
+(41/94) Installing xvidcore (1.3.7-r2)
+(42/94) Installing ffmpeg-libavcodec (6.1.2-r2)
+(43/94) Installing sdl3 (3.2.16-r0)
+(44/94) Installing sdl2-compat (2.32.56-r0)
+(45/94) Installing alsa-lib (1.2.14-r0)
+(46/94) Installing fontconfig (2.15.0-r3)
+(47/94) Installing fribidi (1.0.16-r1)
+(48/94) Installing libintl (0.24.1-r0)
+(49/94) Installing libeconf (0.6.3-r0)
+(50/94) Installing libblkid (2.41-r9)
+(51/94) Installing libmount (2.41-r9)
+(52/94) Installing glib (2.84.4-r0)
+(53/94) Installing graphite2 (1.3.14-r6)
+(54/94) Installing harfbuzz (11.2.1-r0)
+(55/94) Installing libunibreak (6.1-r0)
+(56/94) Installing libass (0.17.3-r0)
+(57/94) Installing libbluray (1.3.4-r1)
+(58/94) Installing mpg123-libs (1.32.10-r0)
+(59/94) Installing libopenmpt (0.7.15-r0)
+(60/94) Installing cjson (1.7.18-r1)
+(61/94) Installing mbedtls (3.6.4-r0)
+(62/94) Installing librist (0.2.10-r1)
+(63/94) Installing libsrt (1.5.3-r1)
+(64/94) Installing libssh (0.11.2-r0)
+(65/94) Installing libsodium (1.0.20-r0)
+(66/94) Installing libzmq (4.3.5-r2)
+(67/94) Installing ffmpeg-libavformat (6.1.2-r2)
+(68/94) Installing serd-libs (0.32.4-r0)
+(69/94) Installing zix-libs (0.6.2-r0)
+(70/94) Installing sord-libs (0.16.18-r0)
+(71/94) Installing sratom (0.6.18-r0)
+(72/94) Installing lilv-libs (0.24.26-r0)
+(73/94) Installing libdovi (3.3.1-r1)
+(74/94) Installing spirv-tools (1.4.313.0-r0)
+(75/94) Installing glslang-libs (1.4.309.0-r0)
+(76/94) Installing shaderc (2024.4-r0)
+(77/94) Installing vulkan-loader (1.4.313.0-r0)
+(78/94) Installing libplacebo (6.338.2-r3)
+(79/94) Installing ffmpeg-libpostproc (6.1.2-r2)
+(80/94) Installing ffmpeg-libswscale (6.1.2-r2)
+(81/94) Installing vidstab (1.1.1-r0)
+(82/94) Installing zimg (3.0.5-r3)
+(83/94) Installing ffmpeg-libavfilter (6.1.2-r2)
+(84/94) Installing libasyncns (0.8-r4)
+(85/94) Installing dbus-libs (1.16.2-r1)
+(86/94) Installing orc (0.4.40-r1)
+(87/94) Installing libflac (1.4.3-r1)
+(88/94) Installing libsndfile (1.2.2-r2)
+(89/94) Installing speexdsp (1.2.1-r2)
+(90/94) Installing tdb-libs (1.4.12-r0)
+(91/94) Installing libpulse (17.0-r5)
+(92/94) Installing v4l-utils-libs (1.28.1-r1)
+(93/94) Installing ffmpeg-libavdevice (6.1.2-r2)
+(94/94) Installing ffmpeg (6.1.2-r2)
+Executing busybox-1.37.0-r18.trigger
+Executing glib-2.84.4-r0.trigger
+OK: 156 MiB in 159 packages
+/home/node # ls 
+ .jpg            image_10016.jpg  sd3.jpg
+/home/node # ^C
+
+/home/node # 

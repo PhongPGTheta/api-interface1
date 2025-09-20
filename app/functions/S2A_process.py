@@ -28,6 +28,7 @@ from core.elevenlabs import API_KEY, PROXY_URL, HISTORY_VOICE_ID_PATH
 from core.config import GOOGLE_API_KEY,\
         GOOGLE_API_KEY_AUDIO, DATA_TEMP,\
         SERVICE_ACCOUNT_KEY
+from .upload2drive import UploadToDrive
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = SERVICE_ACCOUNT_KEY
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -871,6 +872,16 @@ class AudioService:
 
         merged_path = Path(MergeAudio.merge(audio_dir, file_list, id=id))
         logging.info(f"[AUDIO] Created audio successfully: {merged_path}")
+
+        # Upload lên Google Drive ngay sau khi merge
+        try:
+            folder_id = os.environ.get("GDRIVE_FOLDER_ID", "n8n audio")  # Set your Google Drive folder ID if needed
+            uploaded = UploadToDrive.upload_audio(merged_path, folder_id=folder_id)
+            logging.info(f"[DRIVE] Uploaded file: https://drive.google.com/file/d/{uploaded.get('id')}/view")
+        except Exception as e:
+            logging.warning(f"[DRIVE] Upload failed: {e}")
+
+        # Ghi log usage
         try:
             log_file_path = Path(DATA_TEMP) / "api_key_usage_log.json"
             log_file_path.parent.mkdir(parents=True, exist_ok=True)
